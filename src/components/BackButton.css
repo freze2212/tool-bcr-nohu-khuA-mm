@@ -1,0 +1,74 @@
+/* Nút BACK dùng ảnh btn-back.png — đồng bộ toàn app */
+
+.app-back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 118px;
+  height: 36px;
+  padding: 0 14px;
+  margin: 0;
+  border: none;
+  border-radius: 8px;
+  background: #f5c400;
+  color: #1a1400;
+  cursor: pointer;
+  line-height: 1;
+  text-decoration: none;
+  font-family: "Bai Jamjuree", "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  transition: filter 0.2s ease, transform 0.15s ease;
+}
+
+.app-back-btn::before {
+  content: "‹  TRỞ LẠI";
+}
+
+.app-back-btn:hover {
+  filter: brightness(1.08);
+}
+
+.app-back-btn:active {
+  transform: scale(0.98);
+}
+
+.app-back-btn__img {
+  display: none;
+}
+
+.app-back-btn--sm .app-back-btn__img {
+  width: 100px;
+  max-width: min(100px, 36vw);
+}
+
+.app-back-btn--room {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.app-back-btn--table {
+  position: absolute;
+  z-index: 5;
+  padding: 0;
+}
+
+.app-back-btn--table-mobile {
+  left: 0;
+  top: -40px;
+}
+
+.app-back-btn--table-desktop {
+  left: -98px;
+  top: -44px;
+}
+
+@media (max-width: 520px) {
+  .nh-hero-banner__back-slot .app-back-btn__img {
+    width: 120px;
+    max-width: min(120px, 40vw);
+  }
+}

@@ -1,0 +1,583 @@
+{
+  "1:11429": {
+    "screen": "Frame 1",
+    "name": "BG_red 1",
+    "img_ref": "11391f78e7a34c65e9124ea124e5a5e802bd84ca",
+    "width": 1920.0,
+    "height": 1080.0
+  },
+  "1:11432": {
+    "screen": "Frame 1",
+    "name": "Rectangle 2",
+    "img_ref": "18087a3fded13673edbd8d663a2f9bc3d9bd080e",
+    "width": 319.55780029296875,
+    "height": 535.3045043945312
+  },
+  "1:11443": {
+    "screen": "Frame 1",
+    "name": "image 1",
+    "img_ref": "8896ab28453fcb43fbff29757e528c350daa9f1a",
+    "width": 247.37120056152344,
+    "height": 73.95851135253906
+  },
+  "1:11472": {
+    "screen": "Frame 3",
+    "name": "BG_red 1",
+    "img_ref": "11391f78e7a34c65e9124ea124e5a5e802bd84ca",
+    "width": 1920.0,
+    "height": 1080.0
+  },
+  "1:11492": {
+    "screen": "Frame 3",
+    "name": "tool_slot 1",
+    "img_ref": "de571b9360b7c9bfa4e25df083dc7a834f12dbbe",
+    "width": 337.0143737792969,
+    "height": 490.54315185546875
+  },
+  "1:11493": {
+    "screen": "Frame 3",
+    "name": "tool_baccart 1",
+    "img_ref": "2d279afa93ffd4d762776ffee460d393a99e2cb2",
+    "width": 337.0143737792969,
+    "height": 490.54315185546875
+  },
+  "1:11494": {
+    "screen": "Frame 3",
+    "name": "tool_fishing 1",
+    "img_ref": "401c631c92ef63c8113be5d308b237042b579185",
+    "width": 337.0143737792969,
+    "height": 490.54315185546875
+  },
+  "8:97": {
+    "screen": "Frame 3",
+    "name": "image 21",
+    "img_ref": "f8342a7722f12c528af1bc53d0dc7764240647ee",
+    "width": 70.84158325195312,
+    "height": 70.84158325195312
+  },
+  "1:11539": {
+    "screen": "Frame 4",
+    "name": "BG_red 1",
+    "img_ref": "11391f78e7a34c65e9124ea124e5a5e802bd84ca",
+    "width": 2912.0,
+    "height": 1638.0
+  },
+  "1:11565": {
+    "screen": "Frame 4",
+    "name": "image 14",
+    "img_ref": "a50bb534091630fef9757c7f21225289c14f7cb2",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11570": {
+    "screen": "Frame 4",
+    "name": "image 14",
+    "img_ref": "8654e128e6d591696a9725eace96d045621b3c65",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11573": {
+    "screen": "Frame 4",
+    "name": "image 15",
+    "img_ref": "2b64fd84c3e41e4d0c4b5b493cc1c0a8f32c8de6",
+    "width": 113.0,
+    "height": 113.0
+  },
+  "1:11577": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "fb1a1ce89afbb9ad0dddcd32359fdf74217a1328",
+    "width": 137.24790954589844,
+    "height": 81.05916595458984
+  },
+  "1:11580": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "af7f5465f3c2ce129d3fe1c6234ccb2169ba5e7a",
+    "width": 118.67683410644531,
+    "height": 70.09101867675781
+  },
+  "1:11583": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "ae6584076d9ed3a11af6c2be3cf87effc3939f16",
+    "width": 118.67683410644531,
+    "height": 70.09101867675781
+  },
+  "1:11586": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "45c518e3f63a643a87d051a706dc2dbc94273806",
+    "width": 138.05007934570312,
+    "height": 63.97442626953125
+  },
+  "1:11589": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "4220803131f510f939224f633ec8c733ebcc7f32",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11592": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "a42326e86ee64650b17d67557ef98993a8fe686a",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11595": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "9ef4f778a255aadc31931f3787ae76157e62c1cc",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11598": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "8ea8221e2b3f18461431f0bddaba0294b68349c3",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11601": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "69e3a0b64ae8a9673ccb63891946ce1498fde752",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11604": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "9d1f6d3f096fdaa67a8f6cea46a50341edbe2514",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11607": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "153d0ab187e0713f4344b3d86d779ca1ca25084f",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11610": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "2ac862f8cd5f0c0a43439921959af4a80f067149",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11613": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "afb31305d4c62560b947194a6dc79477ee969e03",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11616": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "ffcca11afdef969a77a8612827f59c8545e282c9",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11619": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "1b6ab55f4c792ada0151dcbd1902e769a9761a5d",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11622": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "c1126b6dbaa93f5dc094621cd6faa61413f41b20",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11625": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "8e49547aabe015619fbfbe158944f41c23311229",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11628": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "4b9e3f992db649632dcaea8f45d784aa7380cd3a",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11631": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "8f378f9cdd6cbb443a52dbf89558b3d2e98e98d4",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11634": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "0f9b0d94986b0767a3e3d6862735ac2c5fe31e1e",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11637": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "2ef4e182cc1f222ae245adc01006a6df897f114a",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11640": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "31c76ed57b967105af9448f5c7c2592408b44bd8",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11643": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "2f91c87b2ee2620f5bbd775b69a56c9defa37e7b",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11646": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "7bc03a5d9b439b88ab36d5b066187695b5c3472c",
+    "width": 125.27326202392578,
+    "height": 92.1126937866211
+  },
+  "1:11649": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "1fe15033cd93b462c1d3badde48fec30f7ffdea3",
+    "width": 126.19438934326172,
+    "height": 90.27043914794922
+  },
+  "1:11652": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "34abbf8c8b6fdf40f04a8596b2a0a79617def702",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11655": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "53e1924c074e4f014b253b0b85c5367839251d65",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11658": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "d0891b9989e4a9644d4ebe4303a60613b1d4b638",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11661": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "54f8a89a21a1b1fb3420fd1cd6775baddcfe8067",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "1:11664": {
+    "screen": "Frame 4",
+    "name": "image 3",
+    "img_ref": "486a60c7097c91cf97f870233fd34048f3b069e1",
+    "width": 126.04585266113281,
+    "height": 58.41149139404297
+  },
+  "8:259": {
+    "screen": "Frame 4",
+    "name": "image 21",
+    "img_ref": "f8342a7722f12c528af1bc53d0dc7764240647ee",
+    "width": 70.84158325195312,
+    "height": 70.84158325195312
+  },
+  "1:11679": {
+    "screen": "ALL GAME",
+    "name": "BG_red 1",
+    "img_ref": "11391f78e7a34c65e9124ea124e5a5e802bd84ca",
+    "width": 2912.0,
+    "height": 1638.0
+  },
+  "1:11726": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "eb30fbc2b6b50e379eac1e75ac207e96c6a39829",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11736": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "24804b133e9d1a894016529a6773d9ebef663bb7",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11746": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "2bc7c1131b553acd90f46894b2e3bfaf39627ce3",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11756": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "7ae94a5c47682aadf53f3575128f3d50318ea072",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11767": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "eb30fbc2b6b50e379eac1e75ac207e96c6a39829",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11777": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "24804b133e9d1a894016529a6773d9ebef663bb7",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11787": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "2bc7c1131b553acd90f46894b2e3bfaf39627ce3",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11797": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "7ae94a5c47682aadf53f3575128f3d50318ea072",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11808": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "eb30fbc2b6b50e379eac1e75ac207e96c6a39829",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11818": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "24804b133e9d1a894016529a6773d9ebef663bb7",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11828": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "2bc7c1131b553acd90f46894b2e3bfaf39627ce3",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "1:11838": {
+    "screen": "ALL GAME",
+    "name": "image 14",
+    "img_ref": "7ae94a5c47682aadf53f3575128f3d50318ea072",
+    "width": 170.0,
+    "height": 170.0
+  },
+  "8:277": {
+    "screen": "ALL GAME",
+    "name": "image 21",
+    "img_ref": "f8342a7722f12c528af1bc53d0dc7764240647ee",
+    "width": 70.84158325195312,
+    "height": 70.84158325195312
+  },
+  "1:12289": {
+    "screen": "HACK THƯỜNG",
+    "name": "BG_red 1",
+    "img_ref": "11391f78e7a34c65e9124ea124e5a5e802bd84ca",
+    "width": 1972.0,
+    "height": 1109.0
+  },
+  "1:12316": {
+    "screen": "HACK THƯỜNG",
+    "name": "image 3 1",
+    "img_ref": "8fb3475d5f7cf4f68d892b43ee588d0f7bf8a9d5",
+    "width": 634.893798828125,
+    "height": 846.0
+  },
+  "10:596": {
+    "screen": "HACK THƯỜNG",
+    "name": "loading 1",
+    "img_ref": "6044e22437400c66a80572df7afbcc2e80421ca9",
+    "width": 159.28125,
+    "height": 159.28125
+  },
+  "10:600": {
+    "screen": "HACK THƯỜNG",
+    "name": "robot_aaaa 1",
+    "img_ref": "cc847473a97fd21cfd208bd719ebbfe052814fb2",
+    "width": 184.0,
+    "height": 184.0
+  },
+  "1:12319": {
+    "screen": "HACK THƯỜNG",
+    "name": "image 14",
+    "img_ref": "eb30fbc2b6b50e379eac1e75ac207e96c6a39829",
+    "width": 144.20387268066406,
+    "height": 144.20387268066406
+  },
+  "1:12352": {
+    "screen": "HACK THƯỜNG",
+    "name": "image 17",
+    "img_ref": "56de3714ef6d682e418712a7458494e11ab1cb09",
+    "width": 49.107261657714844,
+    "height": 49.107261657714844
+  },
+  "1:12354": {
+    "screen": "HACK THƯỜNG",
+    "name": "image 18",
+    "img_ref": "a1e63376240432fde0465f6ebd934bf3a5e76caa",
+    "width": 427.794921875,
+    "height": 100.04881286621094
+  },
+  "8:349": {
+    "screen": "HACK THƯỜNG",
+    "name": "image 21",
+    "img_ref": "f8342a7722f12c528af1bc53d0dc7764240647ee",
+    "width": 70.84158325195312,
+    "height": 70.84158325195312
+  },
+  "1:12694": {
+    "screen": "ĐẨY THÔNG BÁO HACK VIP",
+    "name": "BG_red 1",
+    "img_ref": "11391f78e7a34c65e9124ea124e5a5e802bd84ca",
+    "width": 1972.0,
+    "height": 1109.0
+  },
+  "1:12700": {
+    "screen": "ĐẨY THÔNG BÁO HACK VIP",
+    "name": "image 2",
+    "img_ref": "736cc986b8638651711328735a2428c4e8dff2a6",
+    "width": 54.226619720458984,
+    "height": 96.35165405273438
+  },
+  "1:12721": {
+    "screen": "ĐẨY THÔNG BÁO HACK VIP",
+    "name": "image 3 1",
+    "img_ref": "8fb3475d5f7cf4f68d892b43ee588d0f7bf8a9d5",
+    "width": 634.893798828125,
+    "height": 846.0
+  },
+  "1:12722": {
+    "screen": "ĐẨY THÔNG BÁO HACK VIP",
+    "name": "tools 1",
+    "img_ref": "ad86ff0ebda7b4f631d1b3eb2c4daebe436f0311",
+    "width": 421.7068786621094,
+    "height": 263.0
+  },
+  "1:12724": {
+    "screen": "ĐẨY THÔNG BÁO HACK VIP",
+    "name": "image 14",
+    "img_ref": "eb30fbc2b6b50e379eac1e75ac207e96c6a39829",
+    "width": 144.20387268066406,
+    "height": 144.20387268066406
+  },
+  "1:12757": {
+    "screen": "ĐẨY THÔNG BÁO HACK VIP",
+    "name": "image 17",
+    "img_ref": "56de3714ef6d682e418712a7458494e11ab1cb09",
+    "width": 49.107261657714844,
+    "height": 49.107261657714844
+  },
+  "1:12759": {
+    "screen": "ĐẨY THÔNG BÁO HACK VIP",
+    "name": "image 18",
+    "img_ref": "a1e63376240432fde0465f6ebd934bf3a5e76caa",
+    "width": 427.794921875,
+    "height": 100.04881286621094
+  },
+  "1:13266": {
+    "screen": "Frame 12",
+    "name": "BG_red 1",
+    "img_ref": "11391f78e7a34c65e9124ea124e5a5e802bd84ca",
+    "width": 3028.0,
+    "height": 1703.0
+  },
+  "8:70": {
+    "screen": "Frame 12",
+    "name": "image 21",
+    "img_ref": "f8342a7722f12c528af1bc53d0dc7764240647ee",
+    "width": 70.84158325195312,
+    "height": 70.84158325195312
+  },
+  "1:14501": {
+    "screen": "Frame 2147224278",
+    "name": "BG_red 1",
+    "img_ref": "11391f78e7a34c65e9124ea124e5a5e802bd84ca",
+    "width": 3028.0,
+    "height": 1703.0
+  },
+  "1:14686": {
+    "screen": "Frame 2147224278",
+    "name": "image 20",
+    "img_ref": "5fb9cebf7079bcb3974c17a1e015763ff280faa3",
+    "width": 164.0,
+    "height": 160.16822814941406
+  },
+  "1:14705": {
+    "screen": "Frame 2147224278",
+    "name": "Untitled-2 1",
+    "img_ref": "34c426ebb54dd1756803b05a0c40c3574171cbce",
+    "width": 181.0,
+    "height": 181.0
+  },
+  "8:79": {
+    "screen": "Frame 2147224278",
+    "name": "image 21",
+    "img_ref": "f8342a7722f12c528af1bc53d0dc7764240647ee",
+    "width": 70.84158325195312,
+    "height": 70.84158325195312
+  },
+  "1:15024": {
+    "screen": "Frame 2147224369",
+    "name": "Untitled-2 1",
+    "img_ref": "34c426ebb54dd1756803b05a0c40c3574171cbce",
+    "width": 181.0,
+    "height": 181.0
+  },
+  "1:15062": {
+    "screen": "Frame 2147224277",
+    "name": "BG_red 1",
+    "img_ref": "11391f78e7a34c65e9124ea124e5a5e802bd84ca",
+    "width": 3028.0,
+    "height": 1703.0
+  },
+  "1:15068": {
+    "screen": "Frame 2147224277",
+    "name": "image 2",
+    "img_ref": "736cc986b8638651711328735a2428c4e8dff2a6",
+    "width": 54.226619720458984,
+    "height": 96.35165405273438
+  },
+  "10:589": {
+    "screen": "Frame 2147224574",
+    "name": "loading 1",
+    "img_ref": "6044e22437400c66a80572df7afbcc2e80421ca9",
+    "width": 184.0,
+    "height": 184.0
+  },
+  "10:592": {
+    "screen": "Frame 2147224574",
+    "name": "robot_aaaa 1",
+    "img_ref": "cc847473a97fd21cfd208bd719ebbfe052814fb2",
+    "width": 184.0,
+    "height": 184.0
+  }
+}

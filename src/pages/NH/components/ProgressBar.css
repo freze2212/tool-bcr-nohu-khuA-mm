@@ -1,0 +1,246 @@
+/* ---- NH Game Card — Chuẩn Figma Frame 4 & Node 1:11678 (238px x 332px) ---- */
+
+.nh-basic-card {
+  position: relative;
+  width: 238px;
+  height: auto;
+  min-height: 300px;
+  box-sizing: border-box;
+  cursor: pointer;
+  border-radius: 18px;
+  padding: 0;
+  background: #120f08;
+  border: 1.5px solid #e6b800;
+  box-shadow: 0 0 16px rgba(230, 184, 0, 0.22);
+  overflow: hidden;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 0.22s ease;
+}
+
+.nh-basic-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  filter: brightness(1.08);
+  box-shadow: 0 0 24px rgba(245, 196, 0, 0.4);
+  border-color: #f5c400;
+}
+
+.nh-basic-card:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.nh-basic-card:focus-visible {
+  outline: 2px solid #eab308;
+  outline-offset: 3px;
+}
+
+/* Badge góc trên bên phải (Frame 2147224156: 75px x 21px) */
+.nh-basic-card__badge {
+  position: static;
+  z-index: 3;
+  min-width: 72px;
+  height: 22px;
+  margin-top: 8px;
+  padding: 0 10px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto", "Segoe UI", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+.nh-basic-card__badge--cho {
+  background: linear-gradient(180deg, #000000 0%, #404040 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nh-basic-card__badge--choi {
+  background: linear-gradient(180deg, #FF7F00 0%, #FFE100 100%);
+  color: #1a1a1a;
+  text-shadow: none;
+}
+
+.nh-basic-card__badge--jackpot {
+  background: linear-gradient(180deg, #00F78D 0%, #00AA7B 100%);
+  color: #ffffff;
+}
+
+/* Inner Container */
+.nh-basic-card__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 12px 14px;
+}
+
+.nh-basic-game-image-wrap {
+  width: 100%;
+  height: 168px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #07060a;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nh-basic-game-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.nh-basic-game-title {
+  width: 100%;
+  text-align: center;
+  margin-top: 8px;
+  padding: 0 4px;
+  color: #ffffff;
+  font-family: "Roboto", "Segoe UI", sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.nh-basic-bottom {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 2px;
+}
+
+.nh-basic-bar {
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.nh-basic-bar__track {
+  position: relative;
+  height: 28px;
+  border-radius: 8px;
+  border: 0;
+  background: #1a1208;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.nh-basic-bar__pct {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  pointer-events: none;
+}
+
+.nh-basic-bar__fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 7px;
+  transition: width 0.35s ease-in-out;
+}
+
+.nh-basic-bar__fill--cho {
+  background: linear-gradient(180deg, #ff4d4d 0%, #c40000 100%);
+  box-shadow: none;
+}
+
+.nh-basic-bar__fill--choi {
+  background: linear-gradient(180deg, #FF7F00 0%, #FFE100 100%);
+  box-shadow: 0 0 10px rgba(255, 127, 0, 0.6);
+}
+
+.nh-basic-bar__fill--jackpot {
+  background: linear-gradient(180deg, #00F78D 0%, #00AA7B 100%);
+  box-shadow: 0 0 10px rgba(0, 247, 141, 0.6);
+}
+
+/* Nút phần trăm ở đáy (Frame 2147224158: 217px x 30px) */
+.nh-basic-percent-btn {
+  width: 100%;
+  max-width: 217px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+  font-family: "Roboto", "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  transition: filter 0.18s ease, transform 0.18s ease;
+}
+
+.nh-basic-percent-btn:hover {
+  filter: brightness(1.12);
+  transform: scale(1.02);
+}
+
+.nh-basic-percent-btn:active {
+  transform: scale(0.98);
+}
+
+.nh-basic-percent-btn--cho {
+  background: linear-gradient(180deg, #008cff 0%, #0019bc 100%);
+}
+
+.nh-basic-percent-btn--choi {
+  background: linear-gradient(180deg, #FF7F00 0%, #FFE100 100%);
+  color: #1a1a1a;
+  text-shadow: none;
+}
+
+.nh-basic-percent-btn--jackpot {
+  background: linear-gradient(180deg, #00F78D 0%, #00AA7B 100%);
+}
+
+@media (max-width: 640px) {
+  .nh-slot-sec__grid .nh-basic-card {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    aspect-ratio: 238 / 332;
+    min-height: 270px;
+    margin: 0;
+  }
+
+  .nh-slot-sec__grid .nh-basic-game-image-wrap {
+    width: min(76%, 170px);
+    height: auto;
+    aspect-ratio: 1;
+  }
+}

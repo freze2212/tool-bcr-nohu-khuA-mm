@@ -1,0 +1,296 @@
+/* ==========================================================================
+   GOBING RED MECH - UNIFIED TOP HEADER BAR (1:1 FIGMA)
+   ========================================================================== */
+
+.app-header-wrap {
+  width: 100%;
+  height: var(--app-header-height, 76px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #450000D9;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 2px solid #ff0033;
+  box-shadow: 
+    0 4px 25px rgba(0, 0, 0, 0.95),
+    0 2px 15px rgba(255, 0, 51, 0.4);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.app-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 28px;
+  box-sizing: border-box;
+}
+
+/* User Profile Badge (Left) */
+.app-header-bar__user-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  height: 48px;
+  background: rgba(22, 2, 6, 0.94);
+  border: 2px solid #ff0033;
+  border-radius: 26px;
+  padding: 0 22px 0 0;
+  box-shadow: 0 0 18px rgba(255, 0, 51, 0.45), inset 0 0 10px rgba(255, 0, 51, 0.2);
+  overflow: visible;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.app-header-bar__user-pill:hover {
+  box-shadow: 0 0 26px rgba(255, 0, 51, 0.75), inset 0 0 14px rgba(255, 0, 51, 0.35);
+}
+
+.app-header-bar__avatar-wrap {
+  width: 66px;
+  height: 66px;
+  margin-left: -12px;
+  margin-top: -9px;
+  margin-bottom: -9px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.app-header-bar__avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 0, 51, 0.8));
+}
+
+.app-header-bar__username {
+  font-family: "Source Code Pro", monospace;
+  font-size: 17px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+/* Right Stats (Token & Logout) */
+.app-header-bar__right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app-header-bar__token-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  background: rgba(20, 2, 5, 0.94);
+  border: 1.8px solid #ff0033;
+  border-radius: 26px;
+  padding: 0 22px;
+  font-family: "Source Code Pro", monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  box-shadow: 0 0 16px rgba(255, 0, 51, 0.35), inset 0 0 8px rgba(255, 0, 51, 0.15);
+  box-sizing: border-box;
+}
+
+.app-header-bar__token-value {
+  color: #ffd700;
+  font-size: 18px;
+  font-weight: 900;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+.app-header-bar__logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  background: linear-gradient(180deg, #ff1a3c 0%, #b3001e 100%);
+  border: 1.8px solid #ff3355;
+  border-radius: 26px;
+  padding: 0 24px;
+  font-family: "Source Code Pro", monospace;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(255, 0, 51, 0.55);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.app-header-bar__logout:hover {
+  transform: scale(1.04);
+  filter: brightness(1.15);
+  box-shadow: 0 0 28px rgba(255, 0, 51, 0.85);
+}
+
+.app-header-bar__logout:active {
+  transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-header-wrap {
+    height: var(--app-header-height, 62px);
+  }
+
+  .app-header-bar {
+    padding: 0 12px;
+  }
+
+  .app-header-bar__user-pill {
+    height: 40px;
+    gap: 8px;
+    padding: 0 12px 0 0;
+  }
+
+  .app-header-bar__avatar-wrap {
+    width: 48px;
+    height: 48px;
+    margin-left: -8px;
+    margin-top: -4px;
+    margin-bottom: -4px;
+  }
+
+  .app-header-bar__username {
+    font-size: 14px;
+  }
+
+  .app-header-bar__right {
+    gap: 8px;
+  }
+
+  .app-header-bar__token-pill {
+    height: 40px;
+    padding: 0 12px;
+    gap: 6px;
+    font-size: 13px;
+  }
+
+  .app-header-bar__token-value {
+    font-size: 15px;
+  }
+
+  .app-header-bar__logout {
+    height: 40px;
+    padding: 0 14px;
+    gap: 6px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-header-wrap {
+    height: var(--app-header-height, 56px);
+  }
+
+  .app-header-bar {
+    padding: 0 8px;
+    gap: 6px;
+  }
+
+  .app-header-bar__user-pill {
+    height: 36px;
+    gap: 6px;
+    padding: 0 10px 0 0;
+    border-width: 1.5px;
+  }
+
+  .app-header-bar__avatar-wrap {
+    width: 40px;
+    height: 40px;
+    margin-left: -6px;
+    margin-top: -2px;
+    margin-bottom: -2px;
+  }
+
+  .app-header-bar__username {
+    font-size: 12px;
+    max-width: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .app-header-bar__right {
+    gap: 6px;
+  }
+
+  .app-header-bar__token-pill {
+    height: 36px;
+    padding: 0 8px;
+    gap: 4px;
+    font-size: 11px;
+    border-width: 1.5px;
+  }
+
+  .app-header-bar__token-value {
+    font-size: 13px;
+  }
+
+  .app-header-bar__logout {
+    height: 36px;
+    padding: 0 10px;
+    gap: 4px;
+    font-size: 11px;
+    border-width: 1.5px;
+  }
+
+  .app-header-bar__logout svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .app-header-bar {
+    padding: 0 4px;
+    gap: 4px;
+  }
+
+  .app-header-bar__user-pill {
+    height: 32px;
+    padding: 0 6px 0 0;
+  }
+
+  .app-header-bar__avatar-wrap {
+    width: 34px;
+    height: 34px;
+  }
+
+  .app-header-bar__username {
+    font-size: 11px;
+    max-width: 55px;
+  }
+
+  .app-header-bar__token-pill {
+    height: 32px;
+    padding: 0 6px;
+    font-size: 10px;
+  }
+
+  .app-header-bar__token-value {
+    font-size: 11px;
+  }
+
+  .app-header-bar__logout {
+    height: 32px;
+    padding: 0 8px;
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,382 @@
+/* ==========================================================================
+   GOBING CYBER LIVE FEEDS (TERMINAL & LIVE HACK ONLINE) 1:1 FIGMA
+   ========================================================================== */
+
+.hacker-feed {
+  position: fixed;
+  bottom: 20px;
+  z-index: 40;
+  width: min(385px, calc(100vw - 48px));
+  max-width: calc(100vw - 32px);
+  pointer-events: auto;
+  font-family: "Source Code Pro", "Courier New", monospace;
+}
+
+.hacker-feed--left {
+  left: 20px;
+}
+
+.hacker-feed--right {
+  right: 20px;
+}
+
+.hacker-feed__panel {
+  position: relative;
+  background: rgba(8, 1, 2, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 4px;
+  padding: 8px 10px 8px 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  height: 204px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   TERMINAL GREEN BOX (LEFT)
+   -------------------------------------------------------------------------- */
+.hacker-feed--terminal-box .hacker-feed__panel {
+  background: rgba(28, 22, 4, 0.88);
+  border: 1.5px solid #f5c400;
+  box-shadow:
+    0 0 16px rgba(245, 196, 0, 0.28),
+    inset 0 0 10px rgba(245, 196, 0, 0.08);
+}
+
+.hacker-feed--terminal-box .hacker-feed__title {
+  color: #f5c400;
+  text-shadow: 0 0 8px rgba(245, 196, 0, 0.7);
+}
+
+.hacker-feed--terminal-box .hacker-feed__status-dot {
+  background: #f5c400;
+  box-shadow:
+    0 0 6px #f5c400,
+    0 0 12px rgba(245, 196, 0, 0.8);
+}
+
+.hacker-feed--terminal-box .hacker-feed__header {
+  border-bottom: 1.5px solid #f5c400;
+}
+
+.hacker-feed--terminal-box .hacker-feed__corner {
+  border-color: #f5c400;
+}
+
+/* --------------------------------------------------------------------------
+   LIVE HACK RED BOX (RIGHT)
+   -------------------------------------------------------------------------- */
+.hacker-feed--live-box .hacker-feed__panel {
+  background: rgba(32, 2, 2, 0.85);
+  border: 1.5px solid #ff0040;
+  box-shadow:
+    0 0 16px rgba(255, 0, 51, 0.35),
+    inset 0 0 10px rgba(255, 0, 51, 0.1);
+}
+
+.hacker-feed--live-box .hacker-feed__title {
+  color: #ff0033;
+  text-shadow: 0 0 8px rgba(255, 0, 51, 0.9);
+}
+
+.hacker-feed--live-box .hacker-feed__status-dot {
+  background: #ff0033;
+  box-shadow:
+    0 0 6px #ff0033,
+    0 0 12px rgba(255, 0, 51, 0.8);
+}
+
+.hacker-feed--live-box .hacker-feed__header {
+  border-bottom: 1.5px solid #ff0033;
+}
+
+.hacker-feed--live-box .hacker-feed__corner {
+  border-color: #ff0033;
+}
+
+/* --------------------------------------------------------------------------
+   CYBER CORNER BRACKETS
+   -------------------------------------------------------------------------- */
+.hacker-feed__corner {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hacker-feed__corner--tl {
+  top: 0;
+  left: 0;
+  border-top: 2.5px solid;
+  border-left: 2.5px solid;
+}
+
+.hacker-feed__corner--tr {
+  top: 0;
+  right: 0;
+  border-top: 2.5px solid;
+  border-right: 2.5px solid;
+}
+
+/* --------------------------------------------------------------------------
+   HEADER ZONE (HORIZONTAL DIVIDER)
+   -------------------------------------------------------------------------- */
+.hacker-feed__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  padding-bottom: 4px;
+  flex-shrink: 0;
+}
+
+.hacker-feed__title {
+  font-family: "Orbitron", "Source Code Pro", monospace, sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.hacker-feed__status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse-dot 1.8s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   VIEWPORT & SCROLLING UPWARDS
+   -------------------------------------------------------------------------- */
+.hacker-feed__viewport {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.hacker-feed__marquee {
+  display: flex;
+  flex-direction: column;
+  animation: scroll-up 22s linear infinite;
+}
+
+.hacker-feed__marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Text flows smoothly UPWARDS (from bottom to top) */
+@keyframes scroll-up {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.hacker-feed__block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 6px;
+}
+
+.hacker-feed__line {
+  font-family: "Source Code Pro", monospace;
+  font-size: 10.5px;
+  line-height: 1.35;
+  letter-spacing: 0.2px;
+  word-break: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   TERMINAL TEXT STYLES (MATCHING SCREENSHOT 1)
+   -------------------------------------------------------------------------- */
+.hacker-feed__time {
+  color: #ffffff;
+  font-weight: 600;
+  margin-right: 3px;
+  opacity: 0.9;
+}
+
+.hacker-feed__line--green {
+  color: #00ff77;
+}
+
+.hacker-feed__line--green .hacker-feed__term-link {
+  color: #00ff77;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.hacker-feed__line--red {
+  color: #ff0033;
+}
+
+.hacker-feed__line--red .hacker-feed__term-link {
+  color: #ff0033;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.hacker-feed__line--yellow {
+  color: #ffd700;
+}
+
+.hacker-feed__line--yellow .hacker-feed__term-link {
+  color: #ffd700;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.hacker-feed__term-msg {
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   LIVE HACK TEXT STYLES (MATCHING SCREENSHOT 2)
+   -------------------------------------------------------------------------- */
+.hacker-feed__line--live {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.hacker-feed__arrow {
+  color: #ffffff;
+  font-weight: 800;
+  margin-right: 2px;
+}
+
+.hacker-feed__gold-user {
+  color: #ffd700;
+  font-weight: 700;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+}
+
+.hacker-feed__white-text {
+  color: #ffffff;
+}
+
+.hacker-feed__gold-link {
+  color: #ffd700;
+  font-weight: 700;
+  text-decoration: none;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+}
+
+.hacker-feed__gold-link:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .hacker-feed {
+    width: 250px;
+    bottom: 12px;
+  }
+
+  .hacker-feed--left {
+    left: 12px;
+  }
+
+  .hacker-feed--right {
+    right: 12px;
+  }
+
+  .hacker-feed__panel {
+    height: 120px;
+    padding: 6px 8px;
+  }
+
+  .hacker-feed__title {
+    font-size: 11px;
+  }
+
+  .hacker-feed__line {
+    font-size: 9.5px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hacker-feed {
+    width: min(200px, 46vw);
+    bottom: 8px;
+    z-index: 30;
+    pointer-events: none;
+  }
+
+  .hacker-feed--left {
+    left: 6px;
+  }
+
+  .hacker-feed--right {
+    right: 6px;
+  }
+
+  .hacker-feed__panel {
+    height: 84px;
+    padding: 4px 6px;
+    background: rgba(8, 1, 2, 0.88);
+  }
+
+  .hacker-feed__title {
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+
+  .hacker-feed__status-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .hacker-feed__line {
+    font-size: 8.5px;
+    line-height: 1.25;
+  }
+}
+
+@media (max-width: 380px) {
+  .hacker-feed {
+    width: min(155px, 47vw);
+    bottom: 6px;
+  }
+
+  .hacker-feed--left {
+    left: 4px;
+  }
+
+  .hacker-feed--right {
+    right: 4px;
+  }
+
+  .hacker-feed__panel {
+    height: 72px;
+    padding: 3px 4px;
+  }
+
+  .hacker-feed__title {
+    font-size: 8px;
+  }
+
+  .hacker-feed__line {
+    font-size: 7.5px;
+  }
+}

@@ -1,0 +1,1289 @@
+/* ==========================================================================
+   LOBBY ROOM - CYBERPUNK THEME (FIGMA FRAME 2147224278 1:1)
+   ========================================================================== */
+
+.room-cyber-page {
+  min-height: 100%;
+  padding: 10px 16px 20px;
+  color: #ffffff;
+  box-sizing: border-box;
+  overflow-x: clip;
+  font-family: "Source Code Pro", "JetBrains Mono", Roboto, -apple-system, sans-serif;
+}
+
+.home-marquee--lobby.home-marquee--tight {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-top: none;
+}
+
+.room-cyber-shell {
+  width: 100%;
+  max-width: 1720px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   TOP SUB-HEADER (Title, Server Pill, Back Button)
+   -------------------------------------------------------------------------- */
+.room-cyber-top {
+  position: relative;
+  display: grid;
+  grid-template-columns: 154px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px 24px;
+  padding: 8px 8px 12px;
+  border-bottom: 0;
+}
+
+.room-cyber-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.room-cyber-title {
+  display: none;
+}
+
+.room-cyber-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: min(563px, 100%);
+  padding: 10px 22px;
+  border-radius: 0;
+  border: 1px solid #f5c400;
+  background: rgba(20, 16, 4, 0.92);
+  font-family: "Source Code Pro", monospace;
+  font-size: clamp(14px, 1.2vw, 22px);
+  font-weight: 500;
+  color: #eab308;
+  box-shadow: none;
+}
+
+.room-cyber-status span:first-child,
+.room-cyber-status span:nth-child(4) {
+  color: #ffffff;
+}
+
+.room-cyber-status__value {
+  color: #fff600;
+}
+
+.room-cyber-status__sep {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 2px;
+}
+
+.room-cyber-status__online {
+  color: #00ff6e;
+  font-weight: 700;
+}
+
+.room-cyber-back-btn {
+  position: static;
+  justify-self: start;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 118px;
+  height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #f5c400;
+  color: #1a1400;
+  font-family: "Bai Jamjuree", "Segoe UI", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.room-cyber-back-btn::before {
+  content: "‹  TRỞ LẠI";
+}
+
+.room-cyber-back-btn img {
+  display: none;
+}
+
+.room-cyber-back-btn:hover {
+  filter: brightness(1.08);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.room-cyber-back-btn__icon {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.room-cyber-back-btn__text {
+  line-height: 1;
+}
+
+/* --------------------------------------------------------------------------
+   MAIN BOARD CONTAINER
+   -------------------------------------------------------------------------- */
+.room-cyber-board {
+  padding: 14px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* Generic Panel Styling */
+.room-panel {
+  border-radius: 0;
+  padding: 10px 14px 12px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  border: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  min-height: 0;
+  min-width: 0;
+  position: relative;
+}
+
+.room-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.room-panel__title {
+  margin: 0;
+  font-family: "Source Code Pro", monospace;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #f5c400;
+  line-height: 1.25;
+}
+
+.room-panel__divider {
+  height: 1px;
+  margin: 8px 0 10px;
+  background: #f5c400;
+  box-shadow: none;
+  border: none;
+}
+
+.room-panel__divider--red {
+  background: #f5c400;
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   TOP ZONE (3-Column Layout: Left Log | Center AI & Hub | Right Decode)
+   -------------------------------------------------------------------------- */
+.room-cyber-topzone {
+  display: grid;
+  grid-template-columns: minmax(220px, 278px) minmax(0, 1fr) minmax(220px, 278px);
+  grid-template-areas:
+    "left centerTop right"
+    "left centerBottom right";
+  gap: 16px;
+  align-items: stretch;
+}
+
+.room-topzone__left,
+.room-topzone__right {
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  height: 362px;
+  max-height: 362px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.room-topzone__left {
+  grid-area: left;
+}
+
+.room-topzone__right {
+  grid-area: right;
+}
+
+.room-topzone__center-top {
+  grid-area: centerTop;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.room-topzone__center-bottom {
+  grid-area: centerBottom;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* Left: System Log Panel */
+.room-panel--system-log {
+  display: flex;
+  flex-direction: column;
+  height: 362px;
+  max-height: 362px;
+  overflow: hidden;
+}
+
+.room-panel--system-log .room-panel__title {
+  color: #f5c400;
+  text-shadow: none;
+  text-align: center;
+  width: 100%;
+}
+
+.room-log {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 208, 255, 0.45) transparent;
+}
+
+.room-log::-webkit-scrollbar {
+  width: 4px;
+}
+
+.room-log::-webkit-scrollbar-thumb {
+  background: rgba(0, 208, 255, 0.45);
+  border-radius: 4px;
+}
+
+.room-log--system .room-log__line {
+  margin: 0 0 6px;
+  font-family: "Source Code Pro", monospace;
+  font-size: 11.5px;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+.room-log--system .room-log__time {
+  color: #7a7a7a;
+  font-weight: 600;
+}
+
+.room-log--system .room-log__msg {
+  color: #ffffff;
+}
+
+.room-log--system .room-log__line--fee .room-log__msg {
+  color: #fff600;
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(255, 127, 0, 0.4);
+}
+
+/* Right: Decode Log Panel */
+.room-panel--decode-log {
+  display: flex;
+  flex-direction: column;
+  height: 362px;
+  max-height: 362px;
+  overflow: hidden;
+}
+
+.room-panel--decode-log .room-panel__title {
+  color: #f5c400;
+  text-shadow: none;
+  text-align: center;
+  width: 100%;
+}
+
+.room-log--decode .room-log__line {
+  margin: 0 0 6px;
+  font-family: "Source Code Pro", monospace;
+  font-size: 11.5px;
+  line-height: 1.35;
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: none;
+  animation: room-decode-in 0.3s ease-out;
+}
+
+@keyframes room-decode-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   CENTER TOP: AI SCORE PREDICTION (Player & Banker)
+   -------------------------------------------------------------------------- */
+.room-ai-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(140px, 200px) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 12px;
+  width: 100%;
+}
+
+.room-ai-panel {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  border: 0;
+  border-radius: 0;
+  padding: 8px 10px 10px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 244px;
+}
+
+.room-ai-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  text-align: left;
+}
+
+.room-ai-panel__icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.room-ai-panel--player .room-ai-panel__title,
+.room-ai-panel--banker .room-ai-panel__title {
+  color: #eab308;
+  font-size: 12px;
+  font-weight: 800;
+  text-shadow: none;
+  margin: 0;
+}
+
+.room-ai-panel .room-ai-panel__divider {
+  margin: 6px 0 8px;
+  background: #eab308;
+  box-shadow: none;
+}
+
+.room-ai-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto;
+}
+
+.room-ai-row {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+  padding: 2px 6px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+}
+
+.room-ai-row__label,
+.room-ai-row__pct {
+  font-family: "Source Code Pro", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #eab308;
+  text-shadow: none;
+  white-space: nowrap;
+}
+
+.room-ai-row__pct {
+  text-align: right;
+}
+
+.room-ai-row__bar {
+  min-width: 0;
+}
+
+.room-ai-row__bar-track {
+  display: block;
+  width: 100%;
+  height: 8px;
+  border-radius: 2px;
+  border: 1px solid #eab308;
+  background: #000c5d;
+  overflow: hidden;
+}
+
+.room-ai-row__bar-fill {
+  display: block;
+  height: 100%;
+  background: #eab308;
+  box-shadow: 0 0 2px #00ff77;
+  transition: width 0.3s ease;
+}
+
+/* Active Row States */
+.room-ai-panel--player .room-ai-row.is-active,
+.room-ai-panel--banker .room-ai-row.is-active {
+  background: #0033ff;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.room-ai-panel--player .room-ai-row.is-active .room-ai-row__label,
+.room-ai-panel--player .room-ai-row.is-active .room-ai-row__pct,
+.room-ai-panel--banker .room-ai-row.is-active .room-ai-row__label,
+.room-ai-panel--banker .room-ai-row.is-active .room-ai-row__pct {
+  color: #eab308;
+  text-shadow: none;
+  font-weight: 800;
+}
+
+.room-ai-panel--player .room-ai-row.is-active .room-ai-row__bar-track,
+.room-ai-panel--banker .room-ai-row.is-active .room-ai-row__bar-track {
+  border-color: #eab308;
+  background: #000c5d;
+}
+
+.room-ai-panel--player .room-ai-row.is-active .room-ai-row__bar-fill,
+.room-ai-panel--banker .room-ai-row.is-active .room-ai-row__bar-fill {
+  background: #eab308;
+  box-shadow: none;
+}
+
+/* Center VS Graphic */
+.room-ai-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.room-ai-vs__image {
+  width: min(200px, 100%);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: none;
+}
+
+/* --------------------------------------------------------------------------
+   CENTER BOTTOM: MAIN FORECAST CARD (Frame 2147224369, 835x212px)
+   -------------------------------------------------------------------------- */
+.room-forecast__card {
+  width: 100%;
+  min-height: 204px;
+  border-radius: 0;
+  padding: 16px 24px;
+  box-sizing: border-box;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  border: 0;
+  box-shadow: none;
+}
+
+.room-forecast__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Left Symbol Chip */
+.room-forecast__col--left {
+  flex: 0 0 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-forecast__symbol-chip {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 4.5px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.room-forecast__symbol-chip span {
+  font-family: "Roboto", sans-serif;
+  font-size: 84px;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.room-forecast__symbol-chip--banker {
+  background: #ff1a1a;
+  box-shadow: 0 0 18px rgba(255, 0, 0, 0.7);
+}
+
+.room-forecast__symbol-chip--player {
+  background: #0051ff;
+  box-shadow: 0 0 18px rgba(0, 81, 255, 0.7);
+}
+
+/* Center Column */
+.room-forecast__col--center {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-forecast__text {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.room-forecast__heading {
+  margin: 0 0 2px;
+  font-family: "Source Code Pro", monospace;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.room-forecast__hero {
+  margin: 0 0 6px;
+  font-family: "Source Code Pro", "Roboto", monospace;
+  font-size: clamp(34px, 3.8vw, 54px);
+  line-height: 1.05;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.room-forecast__hero--banker,
+.room-forecast__hero--player {
+  color: #ffffff;
+  text-shadow: 0 0 8px #f5c400;
+}
+
+/* 3-Column P-H-B Box */
+.room-forecast__ptb {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 173px;
+  height: 48px;
+  background: #00126e;
+  border: 0.6px solid #00ffe1;
+  border-radius: 6px;
+  padding: 4px 8px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+.room-forecast__ptb-col {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-forecast__ptb-num {
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.room-forecast__ptb-label {
+  font-family: "Roboto", sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+.room-forecast__ptb-col--player .room-forecast__ptb-num,
+.room-forecast__ptb-col--player .room-forecast__ptb-label {
+  color: #00ffe1;
+}
+
+.room-forecast__ptb-col--tie .room-forecast__ptb-num,
+.room-forecast__ptb-col--tie .room-forecast__ptb-label {
+  color: #00ff6e;
+}
+
+.room-forecast__ptb-col--banker .room-forecast__ptb-num,
+.room-forecast__ptb-col--banker .room-forecast__ptb-label {
+  color: #ff0000;
+}
+
+/* 10 Prediction Streak Chips */
+.room-forecast__streaks {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.room-forecast__streak-chip {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+.room-forecast__streak-chip--lose {
+  background: #d93444;
+  border: 1.5px solid #ff003c;
+  color: #ffffff;
+}
+
+.room-forecast__streak-chip--win {
+  background: #008345;
+  border: 1.5px solid #00c053;
+  color: #ffffff;
+}
+
+.room-forecast__streak-chip--tie {
+  background: #ffc107;
+  border: 1.5px solid #ffe100;
+  color: #000000;
+}
+
+/* Right Circular Gauge */
+.room-forecast__col--right {
+  flex: 0 0 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-forecast__gauge {
+  width: 155px;
+  height: 155px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-forecast__gauge-inner {
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  background: transparent;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-forecast__gauge-inner span {
+  font-family: "Roboto", sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: #00ffe1;
+  text-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   BOTTOM ZONE (3 Equal Columns: History | Bead Road | Big Road)
+   -------------------------------------------------------------------------- */
+.room-cyber-row--bottom {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.room-panel--history,
+.room-panel--cau-nhat,
+.room-panel--cau-lon {
+  min-height: 255px;
+}
+
+.room-history__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.room-history__title {
+  margin: 0;
+  font-family: "Source Code Pro", monospace;
+  font-size: 14px;
+  font-weight: 800;
+  color: #f5c400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* History Table */
+.room-history {
+  overflow-y: auto;
+  max-height: 195px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 208, 255, 0.45) transparent;
+}
+
+.room-history::-webkit-scrollbar {
+  width: 4px;
+}
+
+.room-history::-webkit-scrollbar-thumb {
+  background: rgba(0, 208, 255, 0.45);
+  border-radius: 4px;
+}
+
+.room-history table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Source Code Pro", monospace;
+  font-size: 11px;
+}
+
+.room-history th,
+.room-history td {
+  padding: 6px 4px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.room-history thead {
+  display: none;
+}
+
+.room-history th {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 11px;
+  border-bottom: 1px solid rgba(0, 238, 255, 0.3);
+}
+
+.room-history__session {
+  color: #fff600;
+  font-weight: 600;
+  text-align: left;
+  font-size: 11px;
+}
+
+.room-history__time {
+  color: #fff600;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+/* Pill Badges */
+.room-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.room-pill--player {
+  background: #1c89ff;
+  color: #ffffff;
+}
+
+.room-pill--banker {
+  background: #ff003f;
+  color: #ffffff;
+}
+
+.room-pill--hoa-kq {
+  background: #00ae4b;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.room-pill--dg-win {
+  background: #00ff6e;
+  color: #000000;
+}
+
+.room-pill--dg-lose {
+  background: #ff003c;
+  color: #ffffff;
+}
+
+.room-pill--dg-hoa {
+  background: #ffe100;
+  color: #000000;
+  text-transform: uppercase;
+}
+
+.room-pill--empty,
+.room-pill--dg-none {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   BEAD ROAD TABLE (ResultTable) in Red Theme
+   -------------------------------------------------------------------------- */
+.room-cau-nhat__wrap,
+.room-cau-lon__wrap {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+  padding: 4px 0;
+}
+
+.room-panel--cau-nhat .overflow-x-auto.mt-4 {
+  margin-top: 0;
+  width: 100%;
+}
+
+.room-panel--cau-nhat table {
+  border-spacing: 2px !important;
+  border-collapse: separate !important;
+  width: 100%;
+}
+
+.room-panel--cau-nhat td {
+  border: 1px solid rgba(0, 238, 255, 0.55) !important;
+  background: rgba(0, 12, 48, 0.45) !important;
+  width: 28px !important;
+  height: 28px !important;
+  padding: 2px !important;
+}
+
+.room-panel--cau-nhat td img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* --------------------------------------------------------------------------
+   BIG ROAD BOARD in Red Cyberpunk Theme (Matching Bead Road)
+   -------------------------------------------------------------------------- */
+.room-big-road {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 855 / 203;
+  border: 1px solid rgba(0, 238, 255, 0.55);
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  background-color: rgba(0, 12, 48, 0.45) !important;
+  background-image:
+    linear-gradient(to right, rgba(0, 238, 255, 0.28) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 238, 255, 0.28) 1px, transparent 1px);
+  background-size: calc(100% / 20) calc(100% / 6);
+}
+
+.room-big-road__layer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.room-big-road__dot {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.room-big-road__icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE ADJUSTMENTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 1280px) {
+  .room-cyber-topzone {
+    grid-template-columns: 260px minmax(0, 1fr) 260px;
+    gap: 12px;
+  }
+
+  .room-topzone__left,
+  .room-topzone__right,
+  .room-panel--system-log,
+  .room-panel--decode-log {
+    height: 362px;
+    max-height: 362px;
+  }
+
+  .room-ai-grid {
+    grid-template-columns: minmax(0, 1fr) 120px minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .room-ai-vs {
+    width: 120px;
+  }
+
+  .room-ai-vs__image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .room-forecast__symbol-chip {
+    width: 110px;
+    height: 110px;
+  }
+
+  .room-forecast__symbol-chip span {
+    font-size: 64px;
+  }
+
+  .room-forecast__gauge {
+    width: 120px;
+    height: 120px;
+  }
+
+  .room-forecast__gauge-inner {
+    width: 72px;
+    height: 72px;
+  }
+
+  .room-forecast__gauge-inner span {
+    font-size: 20px;
+  }
+}
+
+/* TABLET & MOBILE BREAKPOINT (< 992px) */
+@media (max-width: 992px) {
+  .room-cyber-board {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .room-cyber-topzone,
+  .room-cyber-row--bottom {
+    display: contents;
+  }
+
+  /* 1. DỰ ĐOÁN VÁN TIẾP THEO (Main Forecast Hub) - ĐƯỢC ĐẨY LÊN TRÊN CÙNG */
+  .room-topzone__center-bottom,
+  .room-forecast {
+    order: 1 !important;
+    width: 100%;
+  }
+
+  /* 2. BẢNG CẦU HẠT */
+  .room-panel--cau-nhat {
+    order: 2 !important;
+    width: 100%;
+  }
+
+  /* 3. LỊCH SỬ PHIÊN */
+  .room-panel--history {
+    order: 3 !important;
+    width: 100%;
+  }
+
+  /* 4. BẢNG TỶ LỆ DỰ ĐOÁN (BIG ROAD) */
+  .room-panel--ti-le {
+    order: 4 !important;
+    width: 100%;
+  }
+
+  /* 5. NHẬT KÝ HỆ THỐNG */
+  .room-topzone__left,
+  .room-panel--system-log {
+    order: 5 !important;
+    width: 100%;
+    height: 220px;
+    max-height: 220px;
+    overflow: hidden;
+  }
+
+  /* 6. ĐĂNG XÂM NHẬP GIẢI MÃ */
+  .room-topzone__right,
+  .room-panel--decode-log {
+    order: 6 !important;
+    width: 100%;
+    height: 220px;
+    max-height: 220px;
+    overflow: hidden;
+  }
+
+  /* 7. DỰ ĐOÁN ĐIỂM PLAYER & BANKER -> ĐƯA XUỐNG DƯỚI CÙNG TRANG TRÊN MOBILE THEO YÊU CẦU! */
+  .room-topzone__center-top,
+  .room-topzone__center-top--ai {
+    order: 7 !important;
+    width: 100%;
+  }
+}
+
+/* SMARTPHONES & SMALL MOBILE SCREENS (< 640px) */
+@media (max-width: 640px) {
+  .room-cyber-page {
+    padding: 8px 10px 30px;
+  }
+
+  .room-cyber-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px 14px;
+  }
+
+  .room-cyber-heading {
+    order: 1;
+    width: 100%;
+  }
+
+  .room-cyber-title {
+    font-size: 24px;
+  }
+
+  .room-cyber-status {
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 0;
+    min-width: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .room-cyber-back-btn {
+    position: static;
+    transform: none;
+    align-self: center;
+    order: 3;
+    padding: 0;
+    width: 140px;
+    margin-top: 4px;
+  }
+
+  .room-cyber-back-btn img {
+    width: 140px;
+  }
+
+  /* Main Forecast Card Mobile Layout */
+  .room-forecast__card {
+    padding: 14px 12px;
+    border-radius: 14px;
+  }
+
+  .room-forecast__content {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap: 12px;
+  }
+
+  .room-forecast__col--left {
+    flex: 0 0 auto;
+  }
+
+  .room-forecast__symbol-chip {
+    width: 84px;
+    height: 84px;
+    border-width: 3.5px;
+  }
+
+  .room-forecast__symbol-chip span {
+    font-size: 50px;
+  }
+
+  .room-forecast__col--right {
+    flex: 0 0 auto;
+  }
+
+  .room-forecast__gauge {
+    width: 90px;
+    height: 90px;
+  }
+
+  .room-forecast__gauge-inner {
+    width: 58px;
+    height: 58px;
+  }
+
+  .room-forecast__gauge-inner span {
+    font-size: 17px;
+  }
+
+  .room-forecast__col--center {
+    flex: 1 1 100%;
+    order: 3;
+    margin-top: 4px;
+  }
+
+  .room-forecast__heading {
+    font-size: 13px;
+  }
+
+  .room-forecast__hero {
+    font-size: 30px;
+    margin-bottom: 4px;
+  }
+
+  .room-forecast__ptb {
+    width: 100%;
+    max-width: 220px;
+    height: 42px;
+    margin-bottom: 6px;
+  }
+
+  .room-forecast__ptb-num {
+    font-size: 13px;
+  }
+
+  .room-forecast__ptb-label {
+    font-size: 9px;
+  }
+
+  .room-forecast__streaks {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 4px 2px;
+    scrollbar-width: none;
+  }
+
+  .room-forecast__streaks::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* AI Score Prediction (Player & Banker) - at the bottom on Mobile */
+  .room-ai-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .room-ai-panel {
+    width: 100%;
+    min-height: auto;
+    padding: 8px;
+  }
+
+  .room-ai-row {
+    padding: 3px 6px;
+    grid-template-columns: 48px minmax(0, 1fr) 32px;
+    gap: 6px;
+  }
+
+  .room-ai-row__label,
+  .room-ai-row__pct {
+    font-size: 10px;
+  }
+
+  .room-ai-row__bar-track {
+    height: 7px;
+  }
+
+  .room-ai-vs {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: -2px 0;
+  }
+
+  .room-ai-vs__image {
+    width: 70px;
+    height: 70px;
+    filter: none;
+  }
+
+  /* History Table on small screens */
+  .room-history {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  .room-history table {
+    min-width: 320px;
+  }
+
+  .room-history th,
+  .room-history td {
+    padding: 5px 4px;
+    font-size: 11px;
+  }
+
+  .room-pill {
+    font-size: 9px;
+    padding: 1px 6px;
+  }
+
+  /* Bead Road & Big Road */
+  .room-panel--cau-nhat,
+  .room-panel--ti-le {
+    padding: 10px 8px;
+  }
+
+  .room-panel--cau-nhat td {
+    width: 22px !important;
+    height: 22px !important;
+    padding: 1px !important;
+  }
+
+  .room-panel--cau-nhat td img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .room-big-road {
+    min-height: 110px;
+  }
+
+  .room-big-road__dot {
+    width: 12px;
+    height: 12px;
+  }
+}
+

@@ -1,0 +1,661 @@
+/* ==========================================================================
+   AVIATOR / PHI CÔNG SIÊU CẤP FIGMA 1:1 STYLES
+   Node: 1:17597 (Frame 2147224266: 634px x 846px)
+   ========================================================================== */
+
+.aviator-page {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 72px);
+  padding: 16px 12px 60px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 1;
+}
+
+.aviator-container {
+  width: 100%;
+  max-width: 634px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.aviator-top-bar {
+  width: 100%;
+  max-width: 634px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 14px;
+}
+
+/* Main Aviator Card (Frame 2147224266: 634px x 846px) */
+.aviator-card {
+  position: relative;
+  width: 100%;
+  max-width: 634px;
+  min-height: 846px;
+  height: auto;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-sizing: border-box;
+  padding: 24px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  filter: drop-shadow(0 0 25px rgba(255, 0, 51, 0.45));
+}
+
+/* 1. Top Tỷ Lệ Pill (Frame 2147224271: 245px x 47.1px) */
+.aviator-pill {
+  width: 100%;
+  max-width: 245px;
+  height: 44px;
+  border-radius: 33px;
+  border: 1.2px solid #ff0000;
+  background: linear-gradient(90deg, #2c0000 0%, #a60000 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  box-sizing: border-box;
+  box-shadow: 0 0 14px rgba(255, 0, 51, 0.5), inset 0 0 8px rgba(255, 0, 51, 0.3);
+}
+
+.aviator-pill-text {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 900;
+  font-size: clamp(16px, 3.8vw, 20px);
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.aviator-pill-text span {
+  color: #fff700;
+  text-shadow: 0 0 10px rgba(255, 247, 0, 0.7);
+}
+
+/* 2. Mech Robot & Radar Section (Frame 2147224574: 387px x 184px) */
+.aviator-mech-row {
+  width: 100%;
+  max-width: 420px;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+  gap: 16px;
+}
+
+.aviator-mech-robot-wrap {
+  width: 184px;
+  height: 184px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.aviator-mech-robot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(255, 0, 51, 0.6));
+  animation: aviatorRobotFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes aviatorRobotFloat {
+  0% {
+    transform: translateY(0px) scale(1);
+  }
+  100% {
+    transform: translateY(-5px) scale(1.02);
+  }
+}
+
+.aviator-radar-wrap {
+  position: relative;
+  width: 159px;
+  height: 159px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.aviator-radar-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: aviatorRadarSpin 8s linear infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 0, 51, 0.7));
+}
+
+@keyframes aviatorRadarSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.aviator-radar-center {
+  position: relative;
+  z-index: 2;
+  width: 93px;
+  height: 93px;
+  border-radius: 50%;
+  background: rgba(37, 0, 0, 0.85);
+  border: 1px solid rgba(255, 0, 51, 0.4);
+  box-shadow: 0 0 16px rgba(255, 0, 51, 0.5), inset 0 0 12px rgba(255, 0, 51, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aviator-radar-percent {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: clamp(24px, 4.5vw, 30px);
+  color: #fff700;
+  text-shadow: 0 0 12px rgba(255, 247, 0, 0.75);
+}
+
+/* 3. Game Title */
+.aviator-game-title {
+  width: 100%;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: clamp(18px, 3.8vw, 23px);
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 12px rgba(255, 0, 51, 0.6);
+  margin-top: 2px;
+}
+
+/* 4. Airplane Curve Chart Box (Group 13: 378.5px x 196.8px) */
+.aviator-chart-box {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  height: 197px;
+  border-radius: 16px;
+  border: 1.8px solid #ff0033;
+  background: radial-gradient(circle at 50% 40%, #300006 0%, #150003 100%);
+  box-shadow: inset 0 0 24px rgba(255, 0, 51, 0.35), 0 0 20px rgba(255, 0, 51, 0.3);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px 12px;
+  margin-top: 4px;
+}
+
+/* Chart Grid Background Lines */
+.aviator-chart-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255, 0, 51, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 51, 0.16) 1px, transparent 1px);
+  background-size: 24px 24px;
+  z-index: 1;
+}
+
+/* Flight Trajectory SVG Curve */
+.aviator-svg-curve {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Animated Flying Airplane */
+.aviator-plane-wrap {
+  position: absolute;
+  z-index: 4;
+  width: 71px;
+  height: 71px;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease-out;
+  filter: drop-shadow(0 0 12px rgba(255, 0, 51, 0.8));
+}
+
+.aviator-plane-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: planeHover 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes planeHover {
+  0% {
+    transform: rotate(0deg) translateY(0);
+  }
+  100% {
+    transform: rotate(3deg) translateY(-4px);
+  }
+}
+
+/* Watermark Logo in center */
+.aviator-watermark {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.38;
+}
+
+.aviator-watermark-plane {
+  font-size: 26px;
+  color: #ff3355;
+  filter: drop-shadow(0 0 8px rgba(255, 0, 51, 0.8));
+  transform: rotate(-15deg);
+}
+
+.aviator-watermark-text {
+  font-family: 'Brush Script MT', 'Pacifico', cursive, sans-serif;
+  font-size: 34px;
+  font-weight: 900;
+  font-style: italic;
+  color: #ff2244;
+  letter-spacing: 1px;
+  text-shadow: 0 0 14px rgba(255, 0, 51, 0.7);
+  line-height: 1;
+  margin-top: -4px;
+}
+
+/* Center Multiplier Display */
+.aviator-multiplier-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  pointer-events: none;
+}
+
+.aviator-multiplier-val {
+  font-family: "Roboto", "Impact", sans-serif;
+  font-weight: 900;
+  font-size: clamp(54px, 14vw, 76px);
+  color: #ffffff;
+  text-shadow: 0 0 25px rgba(255, 255, 255, 0.95), 0 0 45px rgba(255, 0, 51, 0.9);
+  letter-spacing: -1px;
+  line-height: 1;
+  text-align: center;
+  transition: all 0.2s ease-out;
+}
+
+.aviator-multiplier-val.flying {
+  color: #fff700;
+  text-shadow: 0 0 25px rgba(255, 247, 0, 0.95), 0 0 45px rgba(255, 85, 0, 0.9);
+  animation: multiplierPulse 0.35s ease-in-out infinite alternate;
+}
+
+@keyframes multiplierPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06); }
+}
+
+.aviator-multiplier-status {
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  color: #ffffff;
+  background: rgba(20, 0, 4, 0.82);
+  border: 1px solid rgba(255, 0, 51, 0.5);
+  padding: 3px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 6px;
+  box-shadow: 0 0 12px rgba(255, 0, 51, 0.5);
+  text-shadow: 0 0 8px rgba(255, 0, 51, 0.7);
+}
+
+.aviator-multiplier-status.vip-active {
+  color: #fff700;
+  border-color: #ffd700;
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.7);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+/* VIP Chart Box Glow */
+.aviator-chart-box--vip {
+  border: 2px solid #ffd700 !important;
+  box-shadow: 0 0 32px rgba(255, 215, 0, 0.6), inset 0 0 24px rgba(255, 215, 0, 0.25) !important;
+  background: radial-gradient(circle at 50% 40%, #42000a 0%, #1a0004 100%) !important;
+}
+
+/* VIP Badge inside chart */
+.aviator-vip-badge {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 6;
+  background: linear-gradient(90deg, #ff9900 0%, #ff0033 100%);
+  border: 1.2px solid #fff700;
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 14px rgba(255, 215, 0, 0.75);
+  animation: vipBadgePulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes vipBadgePulse {
+  0% { transform: scale(1); filter: brightness(1); }
+  100% { transform: scale(1.05); filter: brightness(1.25); }
+}
+
+/* 5. 4 Strategy / Multiplier Metric Boxes (Frame 2147224223: 378.5px x 113.4px) */
+.aviator-metrics-grid {
+  width: 100%;
+  max-width: 380px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 8px;
+  margin-top: 6px;
+}
+
+.aviator-metric-box {
+  width: 100%;
+  min-height: 53px;
+  border-radius: 8px;
+  border: 1px solid #ff0000;
+  background: linear-gradient(90deg, rgba(44, 0, 0, 0.85) 0%, rgba(166, 0, 0, 0.85) 100%);
+  box-shadow: inset 0 0 10px rgba(255, 0, 51, 0.3), 0 0 8px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.aviator-metric-box.vip-active {
+  border-color: #ffd700;
+  box-shadow: inset 0 0 12px rgba(255, 215, 0, 0.4), 0 0 12px rgba(255, 215, 0, 0.3);
+}
+
+.aviator-metric-title {
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: #fff700;
+  text-shadow: 0 0 8px rgba(255, 247, 0, 0.5);
+  line-height: 1.15;
+}
+
+.aviator-metric-val {
+  font-family: "Roboto", sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-top: 2px;
+  letter-spacing: 0.3px;
+}
+
+/* VIP Metric Box */
+.aviator-metric-box--vip {
+  border-color: #ff0000;
+  background: linear-gradient(90deg, #a23300 0%, #ff7700 100%);
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.aviator-metric-box--vip:hover {
+  transform: scale(1.02);
+  filter: brightness(1.15) drop-shadow(0 0 10px rgba(255, 119, 0, 0.6));
+}
+
+.aviator-metric-box--vip.vip-active {
+  background: linear-gradient(90deg, #d48800 0%, #ff0033 100%);
+  border-color: #fff700;
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.8), inset 0 0 10px rgba(255, 247, 0, 0.5);
+}
+
+.aviator-metric-vip-btn {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 800;
+  font-size: 11px;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid #fff700;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-top: 3px;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.3px;
+}
+
+/* 6. Hack Button (Frame 2147224270: 427.8px x 100px) */
+.aviator-hack-btn-wrap {
+  width: 100%;
+  max-width: 418px;
+  height: 84px;
+  margin-top: 2px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aviator-hack-btn {
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-family: "Source Code Pro", monospace;
+  font-weight: 800;
+  font-size: clamp(20px, 4.2vw, 25px);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 0, 51, 0.9);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.aviator-hack-btn:hover:not(:disabled) {
+  transform: scale(1.02);
+  filter: brightness(1.15) drop-shadow(0 0 16px rgba(255, 0, 51, 0.8));
+}
+
+.aviator-hack-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.aviator-hack-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  filter: grayscale(0.2);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .aviator-page {
+    padding: 10px 8px 40px;
+  }
+
+  .aviator-card {
+    min-height: auto;
+    padding: 16px 12px 20px;
+    gap: 10px;
+  }
+
+  .aviator-pill {
+    height: 38px;
+    max-width: 210px;
+  }
+
+  .aviator-pill-text {
+    font-size: 15px;
+  }
+
+  .aviator-mech-row {
+    height: 140px;
+    justify-content: space-around;
+    gap: 8px;
+  }
+
+  .aviator-mech-robot-wrap {
+    width: 125px;
+    height: 125px;
+  }
+
+  .aviator-radar-wrap {
+    width: 115px;
+    height: 115px;
+  }
+
+  .aviator-radar-center {
+    width: 68px;
+    height: 68px;
+  }
+
+  .aviator-radar-percent {
+    font-size: 22px;
+  }
+
+  .aviator-game-title {
+    font-size: 17px;
+  }
+
+  .aviator-chart-box {
+    height: 170px;
+    padding: 8px 10px;
+  }
+
+  .aviator-multiplier-val {
+    font-size: 52px;
+  }
+
+  .aviator-plane-wrap {
+    width: 56px;
+    height: 56px;
+  }
+
+  .aviator-metrics-grid {
+    gap: 6px;
+  }
+
+  .aviator-metric-box {
+    min-height: 48px;
+    padding: 4px 6px;
+  }
+
+  .aviator-metric-title {
+    font-size: 11.5px;
+  }
+
+  .aviator-metric-val {
+    font-size: 12.5px;
+  }
+
+  .aviator-hack-btn-wrap {
+    height: 72px;
+  }
+
+  .aviator-hack-btn {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 380px) {
+  .aviator-mech-robot-wrap {
+    width: 95px;
+    height: 95px;
+  }
+
+  .aviator-radar-wrap {
+    width: 95px;
+    height: 95px;
+  }
+
+  .aviator-radar-center {
+    width: 55px;
+    height: 55px;
+  }
+
+  .aviator-radar-percent {
+    font-size: 18px;
+  }
+
+  .aviator-chart-box {
+    height: 150px;
+  }
+
+  .aviator-multiplier-val {
+    font-size: 44px;
+  }
+
+  .aviator-plane-wrap {
+    width: 46px;
+    height: 46px;
+  }
+
+  .aviator-metric-title {
+    font-size: 10px;
+  }
+
+  .aviator-metric-val {
+    font-size: 11px;
+  }
+
+  .aviator-hack-btn-wrap {
+    height: 60px;
+  }
+
+  .aviator-hack-btn {
+    font-size: 15px;
+  }
+}

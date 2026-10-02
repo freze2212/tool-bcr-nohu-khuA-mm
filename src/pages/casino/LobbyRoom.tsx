@@ -1,0 +1,1203 @@
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { toZonedTime, format } from "date-fns-tz";
+import { DateTime } from "luxon";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { getAssetUrl } from "../../utils/assetUrl";
+import "../../pages/login/css/main.login.css";
+import "./LobbyRoom.css";
+import "./BcrKhuaRoom.css";
+const Cookies = require("js-cookie");
+
+/** PLAYER / BANKER / HÒA — dùng cho bảng lịch sử */
+function roadToResultVN(road: number | undefined): "PLAYER" | "BANKER" | "HÒA" {
+  if (road == null) return "HÒA";
+  if ([8, 9, 10].includes(road)) return "PLAYER";
+  if ([0, 1, 2].includes(road)) return "BANKER";
+  return "HÒA";
+}
+
+function getSessionDisplayId(item: any, index: number): string {
+  const stamp = item?.stampTime;
+  const sid = item?.sessionId ?? item?.sessionID;
+  if (sid != null && String(sid).length > 0) return `#${sid}`;
+  if (stamp != null) return `#${String(stamp)}`;
+  if (item?.id != null) return `#${String(item.id)}`;
+  return `#${index}`;
+}
+
+/** BE thường camelCase JSON → `round` chứ không phải `Round` */
+function readRoundFromPercentCurrent(pc: any): string | undefined {
+  if (pc == null || typeof pc !== "object") return undefined;
+  const v = (pc as any).Round ?? (pc as any).round;
+  if (v == null || v === "") return undefined;
+  return String(v).trim();
+}
+
+/** API có thể trả payload phẳng hoặc bọc trong `data` */
+function unwrapPredictTablePayload(resBody: any): any {
+  if (resBody == null || typeof resBody !== "object") return resBody;
+  const hasFlatTable =
+    resBody.percentCurrent != null ||
+    resBody.ai0 != null ||
+    resBody.groupRoad != null ||
+    Array.isArray(resBody.totalRound);
+  if (hasFlatTable) return resBody;
+  const inner = resBody.data;
+  if (inner != null && typeof inner === "object" && !Array.isArray(inner)) {
+    return inner;
+  }
+  return resBody;
+}
+
+/** Khóa ổn định cho mỗi ván trong totalRound (lưu dự đoán theo phiên) */
+function getRoundStorageKey(item: any): string {
+  if (item?.stampTime != null) return `t:${String(item.stampTime)}`;
+  if (item?.id != null) return `id:${String(item.id)}`;
+  return "";
+}
+
+const ROUND_PREDICTION_CACHE_PREFIX = "roomPredictCacheLocal:";
+const ROUND_PREDICTION_CACHE_MAX = 300;
+
+function buildRoundPredictionCacheKey(tableId?: string): string | null {
+  if (!tableId) return null;
+  return `${ROUND_PREDICTION_CACHE_PREFIX}${tableId}`;
+}
+
+function pruneRoundPredictionMap(map: Map<string, string>): Map<string, string> {
+  if (map.size <= ROUND_PREDICTION_CACHE_MAX) return map;
+  const next = new Map(map);
+  while (next.size > ROUND_PREDICTION_CACHE_MAX) {
+    const firstKey = next.keys().next().value as string | undefined;
+    if (!firstKey) break;
+    next.delete(firstKey);
+  }
+  return next;
+}
+
+/**
+ * Cùng nguồn với ô "DỰ ĐOÁN: VÁN KẾ TIẾP" (ai slot → percentCurrent → root → isPlayer).
+ */
+function liveDuDoanFromTablePayload(
+  selectedAiPercentCurrent: any,
+  rootPercentCurrent: any,
+  isPlayerFallback: string | undefined
+): string {
+  const str =
+    readRoundFromPercentCurrent(selectedAiPercentCurrent) ??
+    readRoundFromPercentCurrent(rootPercentCurrent) ??
+    isPlayerFallback;
+  if (str == null) return "—";
+  const u = String(str).toUpperCase();
+  if (u === "P" || u === "PLAYER") return "PLAYER";
+  if (u === "B" || u === "BANKER") return "BANKER";
+  return "—";
+}
+
+/** Kết quả HÒA thì đánh giá HÒA; còn lại so dự đoán với kết quả. */
+function evaluateDanhGia(
+  duDoan: string,
+  ketQua: "PLAYER" | "BANKER" | "HÒA"
+): "THẮNG" | "THUA" | "HÒA" | "—" {
+  if (ketQua === "HÒA") return "HÒA";
+  if (duDoan === "—") return "—";
+  return duDoan === ketQua ? "THẮNG" : "THUA";
+}
+
+function pillClassForSide(label: string): string {
+  if (label === "PLAYER") return "room-pill--player";
+  if (label === "BANKER") return "room-pill--banker";
+  if (label === "HÒA") return "room-pill--hoa-kq";
+  return "room-pill--empty";
+}
+
+function pillClassForDanhGia(l: "THẮNG" | "THUA" | "HÒA" | "—"): string {
+  if (l === "—") return "room-pill--dg-none";
+  if (l === "HÒA") return "room-pill--dg-hoa";
+  if (l === "THẮNG") return "room-pill--dg-win";
+  return "room-pill--dg-lose";
+}
+
+function formatLogTime(stampTime?: number): string {
+  if (!stampTime) return "--:--:--";
+  try {
+    const localDate = toZonedTime(new Date(stampTime), "Asia/Ho_Chi_Minh");
+    return format(localDate, "HH:mm:ss", { timeZone: "Asia/Ho_Chi_Minh" });
+  } catch {
+    return "--:--:--";
+  }
+}
+
+/** Mỗi bên 10 model: ai0–ai9 (PLAYER), ai10–ai19 (BANKER) */
+const AI_SLOTS_PER_SIDE = 10;
+const AI_TOTAL_SLOTS = AI_SLOTS_PER_SIDE * 2;
+
+const DECODE_LOG_LABELS = [
+  "VƯỢT TƯỜNG LỬA",
+  "QUÉT DỮ LIỆU BÀN",
+  "QUÉT DỮ LIỆU BÀN",
+  "TÍNH TOÁN TỶ LỆ",
+  "AI DỰ ĐOÁN: ĐANG TẢI",
+  "GIẢI MÃ GÓI TIN",
+  "ĐỒNG BỘ NEURAL NET",
+  "PHÂN TÍCH PATTERN",
+  "QUÉT HASH PHIÊN",
+  "XÁC THỰC CHUỖI KHÓA",
+] as const;
+
+function randomDecodeHexCode(): string {
+  const n = Math.floor(Math.random() * 0x10000);
+  return n.toString(16).toUpperCase().padStart(4, "0");
+}
+
+type AiSlotRow = {
+  key: number;
+  aiIndex: number;
+  forecast: number;
+  forecastRaw: number;
+  round: "P" | "B" | "-";
+};
+
+/**
+ * Chia 100% cho n ô theo trọng số (largest remainder), luôn sum = 100.
+ * Mỗi ô tối thiểu MIN_PCT_PER_SLOT% (10 ô → tối đa 50% “sàn”, 50% còn lại chia theo trọng số).
+ */
+const MIN_PCT_PER_SLOT = 5;
+
+function distributeIntegerPercents(weights: number[]): number[] {
+  const n = weights.length;
+  if (n === 0) return [];
+  const reserved = MIN_PCT_PER_SLOT * n;
+  if (reserved > 100) {
+    const base = Math.floor(100 / n);
+    const out = Array(n).fill(base);
+    let rem = 100 - base * n;
+    for (let i = 0; i < rem; i++) out[i]++;
+    return out;
+  }
+  const pool = 100 - reserved;
+  const sumW = weights.reduce((a, b) => a + b, 0);
+  if (sumW <= 0) {
+    const base = Math.floor(pool / n);
+    const out = Array(n).fill(MIN_PCT_PER_SLOT + base);
+    let rem = pool - base * n;
+    for (let i = 0; i < rem; i++) out[i]++;
+    return out;
+  }
+  const exact = weights.map((w) => (pool * w) / sumW);
+  const floors = exact.map((x) => Math.floor(x));
+  const remainder = pool - floors.reduce((a, b) => a + b, 0);
+  const order = exact
+    .map((x, i) => ({ i, frac: x - Math.floor(x) }))
+    .sort((a, b) => b.frac - a.frac);
+  const out = floors.map((f) => f + MIN_PCT_PER_SLOT);
+  for (let k = 0; k < remainder; k++) {
+    out[order[k].i]++;
+  }
+  return out;
+}
+
+function hashStringToUint32(str: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+/** RNG xác định theo seed — cùng seed → cùng dãy (không nhảy mỗi lần poll). */
+function mulberry32(seed: number): () => number {
+  return () => {
+    let t = (seed += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * Trọng số ngẫu nhiên có cấu trúc theo dự đoán ván kế tiếp:
+ * - Phe trùng (B → cột Banker, P → cột Player): ưu ĐIỂM 5–9.
+ * - Cột đối: ưu ĐIỂM 0–5 (tương ứng 1–6), hạ 6–9.
+ */
+function randomWeightsForColumn(
+  column: "player" | "banker",
+  next: "P" | "B" | null,
+  rng: () => number
+): number[] {
+  const favored =
+    next != null &&
+    ((next === "B" && column === "banker") ||
+      (next === "P" && column === "player"));
+
+  const weights: number[] = [];
+  for (let i = 0; i < AI_SLOTS_PER_SIDE; i++) {
+    let base = 0.3 + rng() * 0.7;
+    if (next == null) {
+      base *= 0.88 + rng() * 0.28;
+    } else if (favored) {
+      if (i >= 5) base *= 1.25 + rng() * 0.22;
+      else base *= 0.74 + rng() * 0.14;
+    } else {
+      if (i <= 5) base *= 1.22 + rng() * 0.24;
+      else base *= 0.68 + rng() * 0.12;
+    }
+    weights.push(Math.max(0.12, base));
+  }
+  return weights;
+}
+
+/**
+ * % mỗi ô: RNG có seed (bàn + dự đoán ván kế + số ván đã có) → đổi theo phiên / khi P↔B.
+ * forecastRaw/round vẫn lấy từ API để hiển thị; tổng mỗi bảng = 100, tối thiểu 5%/ô.
+ */
+function buildAiSlots(
+  dataRoom: any,
+  nextVanSide: "P" | "B" | null,
+  seedKey: string
+): {
+  playerSlots: AiSlotRow[];
+  bankerSlots: AiSlotRow[];
+} {
+  const seed = hashStringToUint32(seedKey);
+  const rng = mulberry32(seed);
+  const weightsLeft = randomWeightsForColumn("player", nextVanSide, rng);
+  const weightsRight = randomWeightsForColumn("banker", nextVanSide, rng);
+
+  const pctLeft = distributeIntegerPercents(weightsLeft);
+  const pctRight = distributeIntegerPercents(weightsRight);
+
+  const base: Omit<AiSlotRow, "forecast">[] = Array.from(
+    { length: AI_TOTAL_SLOTS },
+    (_, aiIndex) => {
+      const aiData = dataRoom?.[`ai${aiIndex}`];
+      const pc = aiData?.percentCurrent;
+      const raw = Number(
+        (pc as any)?.Forecast ?? (pc as any)?.forecast ?? 0
+      );
+      const r = readRoundFromPercentCurrent(pc);
+      let round: "P" | "B" | "-" = "-";
+      if (r != null) {
+        const u = r.toUpperCase();
+        if (u === "P" || u === "PLAYER") round = "P";
+        else if (u === "B" || u === "BANKER") round = "B";
+      }
+      return {
+        key: aiIndex + 1,
+        aiIndex,
+        forecastRaw: Math.round(raw),
+        round,
+      };
+    }
+  );
+
+  const adjusted: AiSlotRow[] = base.map((s, i) => {
+    const isLeft = i < AI_SLOTS_PER_SIDE;
+    const localIdx = isLeft ? i : i - AI_SLOTS_PER_SIDE;
+    const forecast = isLeft ? pctLeft[localIdx] : pctRight[localIdx];
+    return {
+      ...s,
+      forecast,
+    };
+  });
+
+  return {
+    playerSlots: adjusted.slice(0, AI_SLOTS_PER_SIDE),
+    bankerSlots: adjusted.slice(AI_SLOTS_PER_SIDE),
+  };
+}
+
+type AiScorePanelProps = {
+  side: "player" | "banker";
+  title: string;
+  slots: AiSlotRow[];
+  selectedKey: number | null;
+  onSelect: (key: number) => void;
+};
+
+function AiScorePanel({
+  side,
+  title,
+  slots,
+  selectedKey,
+  onSelect,
+}: AiScorePanelProps) {
+  return (
+    <div
+      className={`room-ai-panel room-ai-panel--${side}`}
+      style={{
+        backgroundImage: `url(${getAssetUrl("/assets/llwin/room-ai-frame.svg")})`,
+      }}
+    >
+      <div className="room-ai-panel__head">
+        <img
+          className="room-ai-panel__icon"
+          src={getAssetUrl("/assets/llwin/room-ai-icon.png")}
+          alt=""
+        />
+        <h3 className="room-ai-panel__title">{title}</h3>
+      </div>
+      <div className="room-ai-panel__divider" aria-hidden />
+      <div className="room-ai-column">
+        {slots.map((item, idx) => {
+          const isActive = selectedKey === item.key;
+          return (
+            <button
+              key={`${side}-${item.key}`}
+              type="button"
+              className={`room-ai-row ${isActive ? "is-active" : ""}`}
+              onClick={() => onSelect(item.key)}
+            >
+              <span className="room-ai-row__label">ĐIỂM {idx}</span>
+              <span className="room-ai-row__bar" aria-hidden>
+                <span className="room-ai-row__bar-track">
+                  <span
+                    className="room-ai-row__bar-fill"
+                    style={{ width: `${item.forecast}%` }}
+                  />
+                </span>
+              </span>
+              <span className="room-ai-row__pct">{item.forecast}%</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+const LobbyRoom: React.FC = () => {
+  const { id } = useParams();
+  const [dataRoom, setDataRoom] = useState<any>();
+  const [coin, setCoin] = useState<number>(() => {
+    try {
+      const raw = localStorage.getItem("user_info");
+      if (!raw) return 0;
+      const parsed = JSON.parse(raw);
+      return Number(parsed?.coins ?? 0);
+    } catch {
+      return 0;
+    }
+  });
+  const [loading, setLoading] = useState(false);
+  const [isPlayer, setIsPlayer] = useState<string>();
+  const [tableRound, setTableRound] = useState<any>();
+  const [shuffle, setShuffle] = useState<number | null>(null);
+  const [selectedKey, setSelectedKey] = useState<number | null>(1);
+  const [shoe, setShoe] = useState<Array<{ side: "P" | "T" | "B"; hit: boolean }>>([]);
+  const [actionLogs, setActionLogs] = useState<
+    Array<{ stampTime: number; time: string; message: string }>
+  >([]);
+  const [nowTick, setNowTick] = useState(() => Date.now());
+  const [maintenanceFeeLogs, setMaintenanceFeeLogs] = useState<number[]>([]);
+  const [decodeVisibleCount, setDecodeVisibleCount] = useState(1);
+
+  /** Dự đoán đã khóa theo từng ván (khi có ván mới trong totalRound) — không đổi theo poll sau */
+  const [roundPredictionByKey, setRoundPredictionByKey] = useState<
+    Map<string, string>
+  >(() => new Map());
+  const snapshotPredictionRef = useRef<string>("—");
+  const lastValidPredictionRef = useRef<string>("—");
+  const prevRoundIdsRef = useRef<Set<string>>(new Set());
+  const systemLogConnectTsRef = useRef<number>(Date.now());
+  const systemLogViewportRef = useRef<HTMLDivElement>(null);
+  const decodeLogViewportRef = useRef<HTMLDivElement>(null);
+
+  const token = Cookies.get("access_token");
+
+  useEffect(() => {
+    systemLogConnectTsRef.current = Date.now();
+    snapshotPredictionRef.current = "—";
+    lastValidPredictionRef.current = "—";
+    prevRoundIdsRef.current = new Set();
+    setMaintenanceFeeLogs([]);
+    setShoe([]);
+    setActionLogs([]);
+    const cacheKey = buildRoundPredictionCacheKey(id);
+    if (!cacheKey) {
+      setRoundPredictionByKey(new Map());
+      setSelectedKey(1);
+      return;
+    }
+    try {
+      const raw = localStorage.getItem(cacheKey);
+      if (!raw) {
+        setRoundPredictionByKey(new Map());
+      } else {
+        const parsed = JSON.parse(raw) as Record<string, string>;
+        const loaded = new Map<string, string>();
+        Object.entries(parsed).forEach(([k, v]) => {
+          if (!k) return;
+          if (v === "PLAYER" || v === "BANKER") {
+            loaded.set(k, v);
+          }
+        });
+        const pruned = pruneRoundPredictionMap(loaded);
+        setRoundPredictionByKey(pruned);
+      }
+    } catch {
+      setRoundPredictionByKey(new Map());
+    }
+    setSelectedKey(1);
+  }, [id]);
+
+  useEffect(() => {
+    const cacheKey = buildRoundPredictionCacheKey(id);
+    if (!cacheKey) return;
+    try {
+      const payload = Object.fromEntries(roundPredictionByKey.entries());
+      localStorage.setItem(cacheKey, JSON.stringify(payload));
+    } catch {
+      // ignore storage quota / private mode
+    }
+  }, [id, roundPredictionByKey]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) return;
+
+    const deductRoomFee = () => {
+      axios
+        .post(
+          `${process.env.REACT_APP_URL_API}/users/subtract-coins-for-action`,
+          {
+            amount: 5,
+            action: "PLAY_GAME",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((data) => {
+          const newCoins = data.data.coins;
+          setCoin(newCoins);
+          const raw = localStorage.getItem("user_info");
+          if (raw) {
+            try {
+              const u = JSON.parse(raw);
+              u.coins = newCoins;
+              localStorage.setItem("user_info", JSON.stringify(u));
+            } catch {}
+          }
+          window.dispatchEvent(new CustomEvent("token-updated", { detail: { coins: newCoins } }));
+          setMaintenanceFeeLogs((prev) => {
+            const next = [Date.now(), ...prev];
+            return next.slice(0, 30);
+          });
+        })
+        .catch((err) => {
+          const message = err?.response?.data?.message;
+          if (
+            err?.response?.status === 400 &&
+            message === "Số xu hiện tại không đủ để thực hiện hành động: PLAY_GAME"
+          ) {
+            Swal.fire({
+              icon: "error",
+              title: "Lỗi tải dữ liệu",
+              text: message,
+              customClass: {
+                popup: "bg-custom-image text-white",
+              },
+            });
+            navigate("/casino/lobby");
+          }
+        });
+    };
+
+    // Sau khi vào bàn: trừ 5 xu mỗi 30 giây
+    const feeInterval = window.setInterval(deductRoomFee, 30_000);
+    return () => window.clearInterval(feeInterval);
+  }, [token, navigate, id]);
+
+  useEffect(() => {
+    const userInfoString = localStorage.getItem("user_info");
+    if (!userInfoString) return;
+    try {
+      const userInfo = JSON.parse(userInfoString);
+      userInfo.coins = coin;
+      localStorage.setItem("user_info", JSON.stringify(userInfo));
+    } catch {
+      // ignore parse errors
+    }
+  }, [coin]);
+
+  useEffect(() => {
+    const t = window.setInterval(() => setNowTick(Date.now()), 1000);
+    return () => window.clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    if (dataRoom === undefined) {
+      setLoading(true);
+
+      Swal.fire({
+        title: "Đang tải dữ liệu trò chơi",
+        html: "<p class='swal-loading-subtext'>Load Data.</p><div class='swal-loading-dots'><span class='swal-dot swal-dot-cyan'></span><span class='swal-dot swal-dot-orange'></span></div>",
+        customClass: {
+          popup: "swal-loading-modal",
+        },
+        allowOutsideClick: false,
+        showConfirmButton: false,
+      });
+    }
+    if (dataRoom) {
+      // Khi có data thì đóng Swal
+      Swal.close();
+      setLoading(false);
+    }
+  }, [dataRoom]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const fetchTable = () => {
+      axios
+        .get(
+          `${process.env.REACT_APP_URL_API_CASINO}/predict/get-table-by-name?tableName=${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (cancelled) return;
+          const payload = unwrapPredictTablePayload(res.data);
+          const pc = payload?.percentCurrent;
+          setIsPlayer(
+            (pc as any)?.Round ?? (pc as any)?.round ?? undefined
+          );
+          setDataRoom(payload);
+        })
+        .catch(() => undefined);
+    };
+
+    const timeout = setTimeout(fetchTable, 1000);
+    const interval = setInterval(fetchTable, 3000);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timeout);
+      clearInterval(interval);
+    };
+  }, [id, token]);
+
+  useEffect(() => {
+    if (!dataRoom) return;
+    if (dataRoom.shuffle !== 0) {
+      setShuffle(0);
+    }
+    const idx = Math.max(0, Math.min(AI_TOTAL_SLOTS - 1, (selectedKey ?? 1) - 1));
+    setTableRound(dataRoom[`ai${idx}`]);
+  }, [dataRoom, selectedKey]);
+
+  let countDown = 0;
+
+  if (dataRoom?.statusGame === "GP_NEW_GAME_START") {
+    const currentTime = dataRoom?.timeCurrent || DateTime.now().setZone("Asia/Ho_Chi_Minh", { keepLocalTime: false });
+    const roundStartTime = dataRoom?.roundStartTime;
+    const timePassed = currentTime - roundStartTime;
+    const totalDuration = dataRoom?.iTime * 1000;
+    const countDownUnix = Math.max(totalDuration - timePassed, 0);
+    countDown = Math.floor(countDownUnix / 1000);
+  }
+
+  const selectedAi = dataRoom?.[
+    `ai${Math.max(0, Math.min(AI_TOTAL_SLOTS - 1, (selectedKey ?? 1) - 1))}`
+  ];
+
+  /** Cùng nguồn với ô “DỰ ĐOÁN: VÁN KẾ TIẾP” — dùng bias % theo bảng Player/Banker. */
+  const nextVanSidePb = useMemo((): "P" | "B" | null => {
+    const str =
+      readRoundFromPercentCurrent(selectedAi?.percentCurrent) ??
+      readRoundFromPercentCurrent(dataRoom?.percentCurrent) ??
+      isPlayer;
+    if (str == null || str === "") return null;
+    const u = String(str).toUpperCase();
+    if (u === "P" || u === "PLAYER") return "P";
+    if (u === "B" || u === "BANKER") return "B";
+    return null;
+  }, [selectedAi, dataRoom?.percentCurrent, isPlayer]);
+
+  const totalRoundLen = Array.isArray(dataRoom?.totalRound)
+    ? dataRoom.totalRound.length
+    : 0;
+
+  /** Đổi seed khi đổi bàn / dự đoán ván kế / có ván mới → bảng % random tái tính. */
+  const aiPercentSeedKey = useMemo(
+    () => `${id ?? ""}|${nextVanSidePb ?? "null"}|${totalRoundLen}`,
+    [id, nextVanSidePb, totalRoundLen]
+  );
+
+  const { playerSlots, bankerSlots } = useMemo(
+    () => buildAiSlots(dataRoom, nextVanSidePb, aiPercentSeedKey),
+    [dataRoom, nextVanSidePb, aiPercentSeedKey]
+  );
+  const selectedPc = selectedAi?.percentCurrent ?? dataRoom?.percentCurrent;
+  const rawSelectedForecast = Math.round(
+    Number((selectedPc as any)?.Forecast ?? (selectedPc as any)?.forecast ?? 0)
+  );
+  const selectedForecast = rawSelectedForecast > 0 ? rawSelectedForecast : 88;
+
+  const selectedRoundStr =
+    readRoundFromPercentCurrent(selectedAi?.percentCurrent) ??
+    readRoundFromPercentCurrent(dataRoom?.percentCurrent) ??
+    isPlayer;
+  const selectedWinner =
+    selectedRoundStr != null &&
+    String(selectedRoundStr).toUpperCase().match(/^(P|PLAYER)/i)
+      ? "P"
+      : "B";
+
+  /** Cột DỰ ĐOÁN lịch sử = đúng giá trị ô VÁN KẾ TIẾP (không đọc từng dòng totalRound) */
+  const duDoanLiveLabel = useMemo(
+    () =>
+      liveDuDoanFromTablePayload(
+        selectedAi?.percentCurrent,
+        dataRoom?.percentCurrent,
+        isPlayer
+      ),
+    [selectedAi, dataRoom?.percentCurrent, isPlayer]
+  );
+
+  useEffect(() => {
+    if (duDoanLiveLabel === "PLAYER" || duDoanLiveLabel === "BANKER") {
+      lastValidPredictionRef.current = duDoanLiveLabel;
+    }
+  }, [duDoanLiveLabel]);
+
+  /**
+   * Chỉ snapshot cho phiên MỚI xuất hiện.
+   * - Phiên cũ đã có trong danh sách trước đó: giữ nguyên giá trị đã lưu.
+   * - Không backfill ngược toàn bộ lịch sử bằng dự đoán hiện tại.
+   */
+  useEffect(() => {
+    const raw = dataRoom?.totalRound;
+    if (!Array.isArray(raw) || raw.length === 0) return;
+
+    const sorted = [...raw].sort(
+      (a: any, b: any) => (a.stampTime ?? 0) - (b.stampTime ?? 0)
+    );
+    const currentKeys = new Set(
+      sorted
+        .map((item: any) => getRoundStorageKey(item))
+        .filter(Boolean)
+    );
+
+    const currentLive =
+      duDoanLiveLabel === "PLAYER" || duDoanLiveLabel === "BANKER"
+        ? duDoanLiveLabel
+        : lastValidPredictionRef.current;
+    const frozenCandidate =
+      snapshotPredictionRef.current === "PLAYER" ||
+      snapshotPredictionRef.current === "BANKER"
+        ? snapshotPredictionRef.current
+        : lastValidPredictionRef.current;
+    const newRoundKeys = sorted
+      .map((item: any) => getRoundStorageKey(item))
+      .filter((k: string) => Boolean(k) && !prevRoundIdsRef.current.has(k));
+
+    setRoundPredictionByKey((prev) => {
+      const next = new Map(prev);
+      const fillValue =
+        frozenCandidate === "PLAYER" || frozenCandidate === "BANKER"
+          ? frozenCandidate
+          : currentLive;
+      if (fillValue !== "PLAYER" && fillValue !== "BANKER") {
+        return pruneRoundPredictionMap(next);
+      }
+
+      // Safety seed: luôn gán cho phiên mới nhất nếu phiên đó chưa có dự đoán.
+      const latestRound = sorted[sorted.length - 1];
+      const latestKey = latestRound ? getRoundStorageKey(latestRound) : "";
+      if (latestKey && !next.has(latestKey)) {
+        next.set(latestKey, fillValue);
+      }
+
+      // Lần đầu nhận totalRound: chỉ tạo baseline, không gán ngược lịch sử.
+      if (prevRoundIdsRef.current.size === 0) {
+        return pruneRoundPredictionMap(next);
+      }
+
+      for (const item of sorted) {
+        const k = getRoundStorageKey(item);
+        if (!k) continue;
+        // Chỉ gán cho phiên mới (chưa xuất hiện ở poll trước).
+        if (!prevRoundIdsRef.current.has(k) && !next.has(k)) {
+          next.set(k, fillValue);
+        }
+      }
+      return pruneRoundPredictionMap(next);
+    });
+
+    snapshotPredictionRef.current = currentLive;
+    prevRoundIdsRef.current = currentKeys;
+  }, [dataRoom?.totalRound, duDoanLiveLabel]);
+
+  const tableTitle = dataRoom?.tableName ?? id ?? "C04";
+
+  const serverLabel =
+    process.env.REACT_APP_CASINO_LOBBY_SERVER ?? "ASIA_SEXY_V1";
+
+  const systemLogItems = useMemo(() => {
+    const table = String(tableTitle).toUpperCase();
+    const connectTs = systemLogConnectTsRef.current;
+    const bootstrap = [
+      {
+        stampTime: connectTs,
+        time: formatLogTime(connectTs),
+        message: `HỆ THỐNG ĐÃ KẾT NỐI: BÀN BACCARAT ${table}`,
+        kind: "system" as const,
+      },
+      {
+        stampTime: connectTs + 2000,
+        time: formatLogTime(connectTs + 2000),
+        message: `>> TẢI DỮ LIỆU BÀN ${table} | MÃ HÓA AES-256`,
+        kind: "action" as const,
+      },
+    ];
+
+    const rounds = Array.isArray(dataRoom?.totalRound)
+      ? [...dataRoom.totalRound].slice(-20)
+      : [];
+    const roundLogs = rounds.map((item: any, index: number) => ({
+      stampTime: Number(item?.stampTime ?? connectTs + 4000 + index),
+      time: formatLogTime(item?.stampTime),
+      message: ">> ĐỒNG BỘ THÀNH CÔNG [OK]",
+      kind: "sync" as const,
+    }));
+
+    const feeLogs = maintenanceFeeLogs.map((ts) => ({
+      stampTime: ts,
+      time: formatLogTime(ts),
+      message: ">> PHÍ DUY TRÌ: -5 TOKENS",
+      kind: "fee" as const,
+    }));
+
+    const actions = actionLogs.map((item) => ({
+      stampTime: item.stampTime,
+      time: item.time,
+      message: item.message,
+      kind: "action" as const,
+    }));
+
+    return [...bootstrap, ...feeLogs, ...roundLogs, ...actions]
+      .sort((a, b) => a.stampTime - b.stampTime)
+      .slice(-28)
+      .map(({ time, message, kind, stampTime }) => ({
+        time,
+        message,
+        kind,
+        stampTime,
+      }));
+  }, [dataRoom?.totalRound, maintenanceFeeLogs, tableTitle, actionLogs]);
+
+  useEffect(() => {
+    const el = systemLogViewportRef.current;
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
+  }, [systemLogItems]);
+
+  const decodeItems = useMemo(() => {
+    return Array.from({ length: 17 }, (_, index) => {
+      const label = DECODE_LOG_LABELS[index % DECODE_LOG_LABELS.length];
+      return {
+        message: `${label}...[${randomDecodeHexCode()}]`,
+      };
+    });
+  }, [id]);
+
+  useEffect(() => {
+    setDecodeVisibleCount(1);
+  }, [id]);
+
+  useEffect(() => {
+    if (decodeVisibleCount >= decodeItems.length) return;
+
+    const timer = window.setTimeout(() => {
+      setDecodeVisibleCount((prev) => Math.min(prev + 1, decodeItems.length));
+    }, 2000);
+
+    return () => window.clearTimeout(timer);
+  }, [decodeVisibleCount, decodeItems.length]);
+
+  const visibleDecodeItems = useMemo(
+    () => decodeItems.slice(0, decodeVisibleCount),
+    [decodeItems, decodeVisibleCount]
+  );
+
+  useEffect(() => {
+    const el = decodeLogViewportRef.current;
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
+  }, [visibleDecodeItems]);
+
+  const liveClock = useMemo(() => {
+    try {
+      const localDate = toZonedTime(new Date(nowTick), "Asia/Ho_Chi_Minh");
+      return format(localDate, "HH:mm:ss", { timeZone: "Asia/Ho_Chi_Minh" });
+    } catch {
+      return "--:--:--";
+    }
+  }, [nowTick]);
+
+  /** Cùng thứ tự với ResultTable: sort theo stampTime, lấy N ván mới nhất */
+  const historyItems = useMemo(() => {
+    const raw = Array.isArray(dataRoom?.totalRound) ? dataRoom.totalRound : [];
+    if (raw.length === 0) return [];
+    const sorted = [...raw].sort(
+      (a: any, b: any) => (a.stampTime ?? 0) - (b.stampTime ?? 0)
+    );
+    const last = sorted.slice(-24).reverse();
+    return last.map((item: any, index: number) => {
+      const ketQua = roadToResultVN(item?.road);
+      const rk = getRoundStorageKey(item);
+      const duDoan =
+        rk && roundPredictionByKey.has(rk)
+          ? roundPredictionByKey.get(rk)!
+          : "—";
+      const danhGia = evaluateDanhGia(duDoan, ketQua);
+      return {
+        key: `${getSessionDisplayId(item, index)}-${index}`,
+        sessionId: getSessionDisplayId(item, index),
+        duDoan,
+        ketQua,
+        danhGia,
+        stampTime: item?.stampTime as number | undefined,
+      };
+    });
+  }, [dataRoom?.totalRound, roundPredictionByKey]);
+
+  /** 10 streak chips dưới ô P-H-B theo đánh giá phiên hoặc pattern mặc định Frame 2147224345 */
+  const streakChips = useMemo(() => {
+    const defaultChips = [
+      { type: "lose", icon: "✕" },
+      { type: "lose", icon: "✕" },
+      { type: "lose", icon: "✕" },
+      { type: "lose", icon: "✕" },
+      { type: "win", icon: "✓" },
+      { type: "lose", icon: "✕" },
+      { type: "tie", icon: "!" },
+      { type: "lose", icon: "✕" },
+      { type: "lose", icon: "✕" },
+      { type: "tie", icon: "!" },
+      { type: "win", icon: "✓" },
+    ];
+    if (!historyItems || historyItems.length === 0) {
+      return defaultChips;
+    }
+    const recent = [...historyItems].slice(0, 11).reverse();
+    while (recent.length < 11) {
+      recent.unshift({ danhGia: "THUA" } as any);
+    }
+    return recent.map((item) => {
+      if (item.danhGia === "THẮNG") return { type: "win", icon: "✓" };
+      if (item.danhGia === "HÒA") return { type: "tie", icon: "!" };
+      return { type: "lose", icon: "✕" };
+    });
+  }, [historyItems]);
+
+  /** Tổng P/Hòa/B — scratch-data trả roundStats, FE chỉ hiển thị */
+  const ptbCounts = useMemo(
+    () => ({
+      player: Number(dataRoom?.roundStats?.player ?? 35),
+      tie: Number(dataRoom?.roundStats?.tie ?? 9),
+      banker: Number(dataRoom?.roundStats?.banker ?? 22),
+    }),
+    [dataRoom?.roundStats]
+  );
+
+  const recentRounds = (Array.isArray(dataRoom?.totalRound) ? dataRoom.totalRound : []) as Array<{ road?: number }>;
+  const beadRoads = recentRounds.slice(-30).map((item) => roadToResultVN(item.road));
+  const sessionWins = shoe.filter((mark) => mark.hit).length;
+  const sessionTies = shoe.filter((mark) => mark.side === "T").length;
+  const sessionLoss = shoe.filter((mark) => mark.side !== "T" && !mark.hit).length;
+  const sessionRate = shoe.length > 0 ? Math.round((sessionWins / shoe.length) * 100) : selectedForecast;
+  const roadSource =
+    shoe.length > 0
+      ? shoe.map((mark) => (mark.side === "P" ? "PLAYER" : mark.side === "B" ? "BANKER" : "HÒA"))
+      : beadRoads;
+  const visibleRoads = roadSource.slice(-30);
+  const beadCells = Array.from({ length: 30 }, (_, index) => visibleRoads[index]);
+  const eqHeights = [16.64, 22.179, 29.575, 36.979, 48.064, 57.309, 68.402, 79.496, 90.598];
+  const sideLabel = selectedWinner === "P" ? "CON" : "CÁI";
+  const winRate = selectedForecast;
+  const activeSide = shoe.length > 0 ? shoe[shoe.length - 1].side : selectedWinner;
+  const asset = (path: string) => getAssetUrl(path);
+
+  const pushActionLog = (message: string) => {
+    const stampTime = Date.now();
+    setActionLogs((prev) =>
+      [...prev, { stampTime, time: formatLogTime(stampTime), message }].slice(-12)
+    );
+  };
+
+  const confirmSide = (side: "P" | "T" | "B") => {
+    const hit = side !== "T" && side === selectedWinner;
+    setShoe((prev) => [...prev, { side, hit }]);
+    const name = side === "P" ? "NHÀ CON" : side === "B" ? "NHÀ CÁI" : "HOÀ";
+    const result = side === "T" ? "HÒA" : hit ? "THẮNG" : "THUA";
+    pushActionLog(`>> XÁC NHẬN ${name} | ${result} | DỰ ĐOÁN ${sideLabel}`);
+  };
+
+  const undoMark = () => {
+    setShoe((prev) => (prev.length > 0 ? prev.slice(0, -1) : prev));
+    pushActionLog(">> HOÀN TÁC VÁN VỪA XÁC NHẬN");
+  };
+
+  const resetShoe = () => {
+    setShoe([]);
+    setSelectedKey(1);
+    pushActionLog(">> BÀN MỚI | RESET CHUỖI VÁN");
+  };
+
+  return (
+    <div className="bcr-khua">
+      <div className="bcr-khua__bar">
+        <button type="button" className="room-cyber-back-btn" onClick={() => navigate("/casino/lobby")}>
+          <img src={getAssetUrl("/assets/llwin/btn-back.png")} alt="" />
+        </button>
+        <div className="bcr-khua__status">
+          <i />
+          <span>STATUS: ONLINE</span>
+          <span>PING: 12ms</span>
+          <span>BÀN: {String(tableTitle).toUpperCase()}</span>
+        </div>
+        <div className="bcr-khua__status">ALGORITHM: NEURAL V3.8</div>
+        <div className="bcr-khua__clock">
+          <div>
+            <strong>{liveClock} UTC+7</strong>
+            <div className="bcr-khua__meta">REALTIME TELEMETRY</div>
+          </div>
+          <div>
+            <strong>OPERATOR // MM88</strong>
+            <div className="bcr-khua__meta">SECURE LEVEL S</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="bcr-khua__fit">
+        <div className="bcr-khua__board">
+          <section className="bcr-panel bcr-panel--side">
+            <i className="bcr-tick bcr-tick--tl" />
+            <i className="bcr-tick bcr-tick--br" />
+            <header className="bcr-head">
+              <h2>
+                <span className="bcr-head__mark" />
+                AI TELEMETRY & CORE
+                <br />
+                SCAN
+              </h2>
+              <span className="bcr-chip">
+                NODE #01
+                <br />
+                ACTIVE
+              </span>
+            </header>
+            <div className="bcr-core">
+              <div className="bcr-core__img">
+                <img src={asset("/assets/khua/bcr-core.png")} alt="" />
+              </div>
+              <div className="bcr-core__read">
+                <small>ĐANG PHÂN TÍCH</small>
+                <strong>{selectedKey ?? 6} / 6</strong>
+                <span className="bcr-core__dots">
+                  <i /><i /><i /><i /><i /><i />
+                </span>
+              </div>
+            </div>
+            <div className="bcr-feats">
+              <article>
+                <img src={asset("/assets/khua/bcr-icon-1.svg")} width={16.809} height={16.809} alt="" />
+                <div>
+                  <strong>ỔN ĐỊNH</strong>
+                  <span>PHÂN TÍCH LUỒNG</span>
+                </div>
+              </article>
+              <article>
+                <img src={asset("/assets/khua/bcr-icon-2.svg")} width={16.809} height={16.809} alt="" />
+                <div>
+                  <strong>NHANH<br />CHÓNG</strong>
+                  <span>CẬP NHẬT LIÊN TỤC</span>
+                </div>
+              </article>
+              <article>
+                <img src={asset("/assets/khua/bcr-icon-3.svg")} width={16.809} height={16.809} alt="" />
+                <div>
+                  <strong>CHÍNH XÁC</strong>
+                  <span>TỐI ƯU THỰC 99.4%</span>
+                </div>
+              </article>
+              <article>
+                <img src={asset("/assets/khua/bcr-icon-5.svg")} width={16.809} height={16.809} alt="" />
+                <div>
+                  <strong>THÔNG<br />MINH</strong>
+                  <span>TỐI ƯU KẾT QUẢ</span>
+                </div>
+              </article>
+            </div>
+            <div className="bcr-load">
+              <p>
+                <span>NEURAL ENGINE LOAD</span>
+                <b>{winRate}%</b>
+              </p>
+              <i><s style={{ width: `${Math.max(0, Math.min(100, winRate))}%` }} /></i>
+            </div>
+          </section>
+
+          <section className="bcr-panel bcr-panel--mid">
+            <header className="bcr-head">
+              <h2>
+                DECISION ENGINE //
+                <br />
+                REALTIME
+              </h2>
+              <span className="bcr-chip">
+                ROUND
+                <br />
+                #{(recentRounds.length || 0) + shoe.length}
+              </span>
+            </header>
+            <div className="bcr-dial">
+              <div className="bcr-dial__img">
+                <img src={asset("/assets/khua/gauge-ring.png")} alt="" />
+              </div>
+              <div className="bcr-dial__read">
+                <small>DỰ ĐOÁN TIẾP THEO</small>
+                <strong>{sideLabel}</strong>
+                <em>{winRate}%</em>
+                <span className="bcr-dial__trust">
+                  <img src={asset("/assets/khua/bcr-ecg.svg")} width={18.668} height={12.445} alt="" />
+                  ĐỘ TIN CẬY CAO
+                </span>
+              </div>
+            </div>
+            <p className="bcr-bet-note">BẤM ĐẶT CƯỢC // XÁC NHẬN KẾT QUẢ VÁN</p>
+            <div className="bcr-sides">
+              <button
+                type="button"
+                className={`bcr-side is-player${activeSide === "P" ? " is-on" : ""}`}
+                onClick={() => confirmSide("P")}
+              >
+                NHÀ<br />CON<small>PLAYER</small>
+              </button>
+              <button
+                type="button"
+                className={`bcr-side is-tie${activeSide === "T" ? " is-on" : ""}`}
+                onClick={() => confirmSide("T")}
+              >
+                HOÀ<small>TIE</small>
+              </button>
+              <button
+                type="button"
+                className={`bcr-side is-banker${activeSide === "B" ? " is-on" : ""}`}
+                onClick={() => confirmSide("B")}
+              >
+                NHÀ<br />CÁI<small>BANKER</small>
+              </button>
+            </div>
+            <div className="bcr-tools">
+              <button type="button" className="bcr-tool" onClick={undoMark} disabled={shoe.length === 0}>
+                <img src={asset("/assets/khua/bcr-undo.svg")} width={11.035} height={13.447} alt="" />
+                HOÀN TÁC<br />(UNDO)
+              </button>
+              <button type="button" className="bcr-tool" onClick={resetShoe} disabled={shoe.length === 0}>
+                <img src={asset("/assets/khua/bcr-reset.svg")} width={11.631} height={13.447} alt="" />
+                BÀN MỚI<br />(RESET)
+              </button>
+            </div>
+          </section>
+
+          <section className="bcr-panel bcr-panel--side bcr-panel--road">
+            <i className="bcr-tick bcr-tick--tl" />
+            <i className="bcr-tick bcr-tick--br" />
+            <header className="bcr-road-head">
+              <h2>
+                <img src={asset("/assets/khua/bcr-road-c.svg")} width={6.74} height={13.447} alt="" />
+                BẢNG CẦU // BIG<br />ROAD LIVE<br />MATRIX
+              </h2>
+              <div className="bcr-tabs">
+                <span className="is-on">ĐẠI<br />LỘ</span>
+                <span>GIÁP<br />LỘ</span>
+                <span>DỰ<br />ĐOÁN</span>
+              </div>
+            </header>
+            <div className="bcr-matrix">
+              <div className="bcr-matrix__cap">
+                <span>TOẠ ĐỘ MA TRẬN 6x14</span>
+                <b>MÃ HÓA THUẬT TOÁN MM88</b>
+              </div>
+              <div className="bcr-matrix__body">
+                <div className="bcr-beads">
+                  {beadCells.map((side, index) => (
+                    <i
+                      key={`bead-${index}`}
+                      className={`bcr-bead ${side === "BANKER" ? "is-b" : side === "PLAYER" ? "is-p" : side === "HÒA" ? "is-t" : "is-empty"}`}
+                    >
+                      {side === "BANKER" ? "B" : side === "PLAYER" ? "P" : side === "HÒA" ? "H" : ""}
+                    </i>
+                  ))}
+                </div>
+                <div className="bcr-eq">
+                  {eqHeights.map((height, index) => (
+                    <i
+                      key={`eq-${height}`}
+                      style={{
+                        height,
+                        background: index === 8 ? "#fff" : index === 7 ? "#ffe600" : `rgba(255,215,0,${0.2 + index * 0.08})`,
+                        boxShadow: index >= 7 ? "0 0 6.723px #ffe600" : undefined,
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="bcr-stats">
+              <div className="bcr-stats__cap">
+                <span>HIỆU SUẤT PHIÊN LÀM VIỆC</span>
+                <b>TỔNG VÁN: {shoe.length > 0 ? shoe.length : recentRounds.length}</b>
+              </div>
+              <div className="bcr-stats__row">
+                <div><span>THẮNG</span><strong>{shoe.length > 0 ? sessionWins : ptbCounts.player}</strong></div>
+                <div><span>THUA</span><strong>{shoe.length > 0 ? sessionLoss : ptbCounts.banker}</strong></div>
+                <div><span>HÒA</span><strong>{shoe.length > 0 ? sessionTies : ptbCounts.tie}</strong></div>
+                <div><span>TỶ LỆ</span><strong>{shoe.length > 0 ? sessionRate : winRate}%</strong></div>
+              </div>
+            </div>
+            <div className="bcr-advice">
+              <div>
+                <strong>KHUYẾN NGHỊ VỐN TỐI ƯU</strong>
+                <span>ĐI ĐỀU TAY 1-2-4 HOẶC GIỮ NGUYÊN MỨC CƠ BẢN</span>
+              </div>
+              <b>AN TOÀN<br />A+</b>
+            </div>
+            <div className="bcr-log">
+              <div className="bcr-log__cap">
+                <span>TERMINAL</span>
+                <img src={asset("/assets/khua/bcr-log-icon.svg")} width={9.38} height={9.38} alt="" />
+              </div>
+              {systemLogItems.slice(-6).map((log) => (
+                <p key={`${log.stampTime}-${log.message}`}>
+                  <time>[{log.time}]</time>
+                  <span>{log.message}</span>
+                </p>
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LobbyRoom;

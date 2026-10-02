@@ -1,0 +1,644 @@
+/* ==========================================================================
+   TABLE GAME NỔ HŨ - CHUẨN 1:1 FIGMA NODE 1:12288 (HACK THƯỜNG)
+   ========================================================================== */
+
+.nh-table-page {
+  width: 100%;
+  min-height: calc(100vh - var(--app-header-height, 76px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 16px 12px 60px;
+  box-sizing: border-box;
+}
+
+.nh-table-container {
+  position: relative;
+  width: 100%;
+  max-width: 634px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Top Back Button Row */
+.nh-table-top-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 14px;
+}
+
+/* Main Table Card (Frame 2147224266: 634px x 846px) */
+.nh-table-card {
+  position: relative;
+  width: 100%;
+  max-width: 634px;
+  min-height: 846px;
+  height: auto;
+  /* background-image set via inline style for getAssetUrl */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-sizing: border-box;
+  padding: 24px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  color: #ffffff;
+  font-family: "Roboto", "Source Code Pro", sans-serif;
+  filter: drop-shadow(0 0 25px rgba(255, 0, 51, 0.45));
+}
+
+/* Top Section: Radar Loading (Frame 2147224574: 387px x 184px) */
+.nh-table-top-row {
+  width: 100%;
+  max-width: 420px;
+  height: 155px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+/* Radar loading (Frame 2147224573: 159px x 159px) */
+.nh-table-radar-wrap {
+  position: relative;
+  width: 159px;
+  height: 159px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nh-table-radar-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: nhRadarSpin 6s linear infinite;
+}
+
+@keyframes nhRadarSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.nh-table-radar-center {
+  position: relative;
+  z-index: 2;
+  width: 93px;
+  height: 93px;
+  border-radius: 50%;
+  background: rgba(37, 0, 0, 0.88);
+  border: 1.5px solid rgba(255, 0, 51, 0.6);
+  box-shadow: inset 0 0 12px rgba(255, 0, 51, 0.5), 0 0 10px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nh-table-radar-percent {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 31px;
+  line-height: 1;
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+}
+
+/* Robot Avatar (184px x 184px) */
+.nh-table-robot-wrap {
+  width: 184px;
+  height: 184px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nh-table-robot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px rgba(255, 0, 51, 0.5));
+  animation: nhRobotFloat 3s ease-in-out infinite alternate;
+}
+
+@keyframes nhRobotFloat {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Middle Section: Game Thumbnail & Scanning Box (Frame 2147224185: 400px x 161px) */
+.nh-table-game-row {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 0;
+}
+
+.nh-table-game-thumb-wrap {
+  width: 144px;
+  height: 144px;
+  border-radius: 13px;
+  overflow: hidden;
+  border: 2px solid #ff0033;
+  box-shadow: 0 0 14px rgba(255, 0, 51, 0.65);
+  background: rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nh-table-game-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nh-table-game-info {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.nh-table-game-title {
+  width: 100%;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: clamp(16px, 3.2vw, 20px);
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 0, 51, 0.4);
+}
+
+/* Frame 2147224197: 236.45px x 114.87px */
+.nh-table-scanning-box {
+  position: relative;
+  width: 100%;
+  max-width: 236px;
+  min-height: 115px;
+  height: 115px;
+  background: #390000;
+  border: 1px solid #ff0000;
+  border-radius: 9px;
+  box-shadow: inset 0 0 16px rgba(255, 0, 51, 0.4), 0 0 14px rgba(255, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* 4 Corner Brackets (Vector 3 Stroke from Figma) */
+.nh-table-scanning-box .nh-scan-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: #ff0000;
+  border-style: solid;
+  pointer-events: none;
+  filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.6));
+}
+
+.nh-table-scanning-box .nh-scan-corner--tl {
+  top: 12px;
+  left: 14px;
+  border-width: 2.5px 0 0 2.5px;
+}
+
+.nh-table-scanning-box .nh-scan-corner--tr {
+  top: 12px;
+  right: 14px;
+  border-width: 2.5px 2.5px 0 0;
+}
+
+.nh-table-scanning-box .nh-scan-corner--bl {
+  bottom: 12px;
+  left: 14px;
+  border-width: 0 0 2.5px 2.5px;
+}
+
+.nh-table-scanning-box .nh-scan-corner--br {
+  bottom: 12px;
+  right: 14px;
+  border-width: 0 2.5px 2.5px 0;
+}
+
+.nh-table-scanning-text {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 500;
+  font-size: 21.5px;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1.25;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  z-index: 1;
+}
+
+.nh-table-tech-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  padding: 0 8px;
+  z-index: 1;
+}
+
+.nh-table-tech-line {
+  font-family: "Source Code Pro", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 6px rgba(255, 0, 51, 0.7);
+}
+
+.nh-table-scanning-dots {
+  display: inline-block;
+  animation: nhScanningDots 1.4s infinite;
+}
+
+@keyframes nhBlink {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* 4 Feature Strategy Boxes (Frame 2147224269: 399.8px x 190.7px) */
+.nh-table-features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 14px;
+  width: 100%;
+  max-width: 440px;
+  margin-top: 6px;
+}
+
+.nh-table-feature-box {
+  position: relative;
+  width: 100%;
+  height: 92px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(44, 0, 0, 0.9) 0%, rgba(166, 0, 0, 0.8) 100%);
+  border: 1.5px solid #FF8000;
+  box-shadow: 0 0 14px rgba(255, 128, 0, 0.35), inset 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.nh-table-feature-title {
+  font-family: "Source Code Pro", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
+  color: #FFF700;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(255, 247, 0, 0.5);
+}
+
+.nh-table-feature-desc {
+  margin-top: 4px;
+  font-family: "Source Code Pro", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+/* VIP Feature Box */
+.nh-table-feature-box--vip {
+  position: relative;
+  cursor: pointer;
+  overflow: visible;
+}
+
+.nh-table-vip-lock {
+  position: absolute;
+  top: -16px;
+  right: -8px;
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+  pointer-events: none;
+}
+
+.nh-table-vip-btn {
+  margin-top: 4px;
+  padding: 3px 12px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #FF0000 0%, #FF8800 100%);
+  border: 1px solid #FFF700;
+  color: #ffffff;
+  font-family: "Source Code Pro", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.nh-table-vip-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.15);
+}
+
+/* Hack Button (Frame 2147224270: 427.8px x 100px) */
+.nh-table-hack-btn-wrap {
+  width: 100%;
+  max-width: 418px;
+  height: 84px;
+  margin-top: 2px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nh-table-hack-btn {
+  width: 100%;
+  height: 100%;
+  /* background-image set via inline style for getAssetUrl */
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-family: "Source Code Pro", monospace;
+  font-weight: 800;
+  font-size: clamp(20px, 4.2vw, 26px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 0 14px #FF0000, 0 0 24px #FF0000;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.nh-table-hack-btn:hover:not(:disabled) {
+  transform: scale(1.03);
+  filter: brightness(1.18);
+}
+
+.nh-table-hack-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.nh-table-hack-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Hack Running Progress */
+.nh-table-progress-wrap {
+  width: 100%;
+  max-width: 428px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: rgba(44, 0, 0, 0.95);
+  border: 1.5px solid #FF0033;
+  box-shadow: 0 0 20px rgba(255, 0, 51, 0.4);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nh-table-progress-label {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 700;
+  font-size: 15px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.nh-table-progress-bar {
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  background: #00100D;
+  border: 1px solid rgba(255, 0, 51, 0.3);
+  overflow: hidden;
+}
+
+.nh-table-progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #F7FF00 0%, #FF9500 55%, #FF0033 100%);
+  box-shadow: 0 0 12px rgba(255, 0, 51, 0.7);
+  transition: width 0.12s linear;
+}
+
+/* Top Tỷ Lệ Pill (Frame 2147224271: 245px x 47.1px) */
+.nh-table-bottom-pill {
+  width: 100%;
+  max-width: 245px;
+  height: 44px;
+  border-radius: 33px;
+  background: linear-gradient(90deg, #2C0000 0%, #A60000 100%);
+  border: 1.2px solid #FF0000;
+  box-shadow: 0 0 16px rgba(255, 0, 51, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  margin-bottom: 2px;
+}
+
+.nh-table-bottom-pill-text {
+  font-family: "Source Code Pro", monospace;
+  font-weight: 900;
+  font-size: 20px;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive Styles */
+@media (max-width: 640px) {
+  .nh-table-page {
+    padding: 10px 8px 40px;
+  }
+
+  .nh-table-card {
+    min-height: auto;
+    padding: 14px 12px 20px;
+    gap: 12px;
+  }
+
+  .nh-table-top-row {
+    height: auto;
+    gap: 8px;
+    justify-content: space-around;
+  }
+
+  .nh-table-radar-wrap {
+    width: 110px;
+    height: 110px;
+  }
+
+  .nh-table-radar-center {
+    width: 65px;
+    height: 65px;
+  }
+
+  .nh-table-radar-percent {
+    font-size: 20px;
+  }
+
+  .nh-table-robot-wrap {
+    width: 110px;
+    height: 110px;
+  }
+
+  .nh-table-game-row {
+    gap: 10px;
+  }
+
+  .nh-table-game-thumb-wrap {
+    width: 90px;
+    height: 90px;
+  }
+
+  .nh-table-scanning-box {
+    min-height: 95px;
+    height: 95px;
+    padding: 8px 10px;
+  }
+
+  .nh-table-scanning-text {
+    font-size: 16px;
+  }
+
+  .nh-table-tech-line {
+    font-size: 11px;
+  }
+
+  .nh-table-features-grid {
+    gap: 8px;
+  }
+
+  .nh-table-feature-box {
+    height: 76px;
+    padding: 6px;
+  }
+
+  .nh-table-feature-title {
+    font-size: 15px;
+  }
+
+  .nh-table-feature-desc {
+    font-size: 11px;
+  }
+
+  .nh-table-hack-btn-wrap {
+    height: 68px;
+  }
+
+  .nh-table-hack-btn {
+    font-size: 16px;
+  }
+
+  .nh-table-bottom-pill {
+    height: 38px;
+    max-width: 210px;
+  }
+
+  .nh-table-bottom-pill-text {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .nh-table-radar-wrap {
+    width: 90px;
+    height: 90px;
+  }
+
+  .nh-table-radar-center {
+    width: 52px;
+    height: 52px;
+  }
+
+  .nh-table-radar-percent {
+    font-size: 17px;
+  }
+
+  .nh-table-robot-wrap {
+    width: 90px;
+    height: 90px;
+  }
+
+  .nh-table-game-thumb-wrap {
+    width: 75px;
+    height: 75px;
+  }
+
+  .nh-table-feature-box {
+    height: 68px;
+  }
+
+  .nh-table-feature-title {
+    font-size: 13px;
+  }
+
+  .nh-table-feature-desc {
+    font-size: 10px;
+  }
+
+  .nh-table-hack-btn-wrap {
+    height: 58px;
+  }
+
+  .nh-table-hack-btn {
+    font-size: 14px;
+  }
+}

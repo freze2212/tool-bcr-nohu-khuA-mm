@@ -1,0 +1,446 @@
+.mm-login {
+  --gold: #facc15;
+  --gold-dim: rgba(234, 179, 8, 0.4);
+  --ink: #0d0d12;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 28px 16px 32px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: transparent;
+  font-family: "Bai Jamjuree", "Segoe UI", sans-serif;
+}
+
+.mm-login__shell {
+  width: min(460px, 100%);
+  padding: 3px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffb800 0%, #3a2e0a 35%, #18150a 65%, #ffb800 100%);
+  box-shadow: 0 0 16px rgba(255, 184, 0, 0.25);
+  box-sizing: border-box;
+}
+
+.mm-login__card {
+  position: relative;
+  border-radius: 14px;
+  background: rgba(13, 13, 18, 0.95);
+  border: 1px solid rgba(234, 179, 8, 0.4);
+  padding: 28px 28px 16px;
+  box-sizing: border-box;
+  clip-path: polygon(
+    18px 0,
+    calc(100% - 18px) 0,
+    100% 18px,
+    100% calc(100% - 18px),
+    calc(100% - 18px) 100%,
+    18px 100%,
+    0 calc(100% - 18px),
+    0 18px
+  );
+}
+
+.mm-login__tick {
+  position: absolute;
+  background: rgba(250, 204, 21, 0.8);
+}
+
+.mm-login__tick--tl-h { top: 8px; left: 12px; width: 28px; height: 2px; }
+.mm-login__tick--tr-h { top: 8px; right: 12px; width: 28px; height: 2px; }
+.mm-login__tick--tl-v { top: 12px; left: 8px; width: 2px; height: 28px; }
+.mm-login__tick--tr-v { top: 12px; right: 8px; width: 2px; height: 28px; }
+
+.mm-login__hazard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.mm-login__bars,
+.mm-login__bars--flip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mm-login__bars i,
+.mm-login__bars--flip i {
+  display: block;
+  height: 4px;
+  background: #facc15;
+}
+
+.mm-login__bars i:nth-child(1) { width: 8px; opacity: 1; }
+.mm-login__bars i:nth-child(2) { width: 14px; opacity: 0.6; }
+.mm-login__bars i:nth-child(3) { width: 6px; opacity: 0.3; }
+.mm-login__bars--flip i:nth-child(1) { width: 6px; opacity: 0.3; }
+.mm-login__bars--flip i:nth-child(2) { width: 14px; opacity: 0.6; }
+.mm-login__bars--flip i:nth-child(3) { width: 8px; opacity: 1; }
+
+.mm-login__slit {
+  width: 72px;
+  height: 7px;
+  border-radius: 1px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #ffb800 0 4px,
+    #121212 4px 8px
+  );
+}
+
+.mm-login__emblem {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: 4px auto 6px;
+}
+
+.mm-login__emblem::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(234, 179, 8, 0.2);
+  filter: blur(10px);
+}
+
+.mm-login__emblem img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: auto;
+  filter: drop-shadow(0 0 4px rgba(255, 200, 0, 0.8));
+}
+
+.mm-login__emblem img:nth-child(2) { width: 40px; }
+.mm-login__emblem img:nth-child(3) { width: 16px; }
+
+.mm-login__title {
+  margin: 0;
+  text-align: center;
+  color: #facc15;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  text-shadow: 0 0 22px rgba(255, 140, 0, 0.5), 0 0 10px rgba(255, 184, 0, 0.8);
+}
+
+.mm-login__sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 8px 0 16px;
+  color: rgba(254, 240, 138, 0.8);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.mm-login__sub span {
+  width: 42px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(234, 179, 8, 0), #eab308);
+}
+
+.mm-login__sub span:last-child {
+  background: linear-gradient(270deg, rgba(234, 179, 8, 0), #eab308);
+}
+
+.mm-login__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 36px 0 40px;
+  box-sizing: border-box;
+  border: 1px solid rgba(234, 179, 8, 0.4);
+  border-radius: 11px;
+  background: rgba(20, 20, 29, 0.9);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.login-field__icon {
+  position: absolute;
+  left: 12px;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.login-field__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #fff8d6;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.login-field__input::placeholder {
+  color: rgba(234, 179, 8, 0.45);
+}
+
+.login-field__eye {
+  position: absolute;
+  right: 8px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.login-field__eye img {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.login-field-wrap {
+  position: relative;
+}
+
+.login-field__dot {
+  position: absolute;
+  right: 12px;
+  top: 22px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(234, 179, 8, 0.4);
+  pointer-events: none;
+}
+
+.login-page__field-error {
+  margin: 4px 0 0 8px;
+  font-size: 12px;
+  color: #ffb4b4;
+}
+
+.mm-login__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 24px;
+}
+
+.mm-login__check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: rgba(254, 240, 138, 0.8);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.mm-login__check input {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border-radius: 4px;
+  border: 1px solid rgba(234, 179, 8, 0.7);
+  background: transparent;
+  cursor: pointer;
+}
+
+.mm-login__check input:checked {
+  background: #eab308;
+  box-shadow: inset 0 0 0 2px #111;
+}
+
+.mm-login__link {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: rgba(250, 204, 21, 0.9);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+}
+
+.mm-login__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 47px;
+  margin-top: 2px;
+  border: 0;
+  border-radius: 11px;
+  cursor: pointer;
+  color: #111;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 50%, #facc15 100%);
+  box-shadow: 0 0 18px rgba(255, 196, 0, 0.6), inset 0 0 9px rgba(255, 245, 160, 0.8);
+}
+
+.mm-login__submit img {
+  width: 18px;
+  height: 18px;
+}
+
+.mm-login__or {
+  position: relative;
+  margin: 18px 0 14px;
+  border-top: 1px solid rgba(234, 179, 8, 0.3);
+  text-align: center;
+}
+
+.mm-login__or span {
+  position: relative;
+  top: -8px;
+  padding: 0 14px;
+  background: #0d0d12;
+  color: rgba(234, 179, 8, 0.8);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.mm-login__alt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 43px;
+  border-radius: 11px;
+  border: 2px solid rgba(234, 179, 8, 0.6);
+  background: rgba(234, 179, 8, 0.05);
+  color: #fde047;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255, 184, 0, 0.15);
+}
+
+.mm-login__alt img {
+  width: 14px;
+  height: 14px;
+}
+
+.mm-login__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(234, 179, 8, 0.2);
+  color: rgba(234, 179, 8, 0.6);
+  font-size: 9px;
+  letter-spacing: 0.8px;
+}
+
+.mm-login__foot i {
+  width: 56px;
+  height: 5px;
+  border-radius: 1px;
+  background: repeating-linear-gradient(-45deg, #ffb800 0 3px, #121212 3px 6px);
+  opacity: 0.8;
+}
+
+.mm-login__hud {
+  display: flex;
+  gap: 10px;
+  width: min(460px, 100%);
+}
+
+.mm-login__badge {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 11px;
+  border: 1px solid rgba(234, 179, 8, 0.4);
+  background: rgba(14, 14, 22, 0.9);
+  box-shadow: 0 0 13px rgba(0, 0, 0, 0.5);
+}
+
+.mm-login__badge p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 4px;
+  color: rgba(250, 204, 21, 0.8);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.mm-login__badge strong {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fde047;
+  font-size: 12px;
+  letter-spacing: 0.6px;
+}
+
+.mm-login__badge img {
+  width: 14px;
+  height: 14px;
+}
+
+.mm-login__pulse {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #eab308;
+  box-shadow: 0 0 7px #ffd700;
+}
+
+@media (max-width: 520px) {
+  .mm-login {
+    justify-content: flex-start;
+    padding-top: 18px;
+  }
+
+  .mm-login__card {
+    padding: 22px 16px 14px;
+  }
+
+  .mm-login__title {
+    font-size: 20px;
+  }
+
+  .mm-login__hud {
+    flex-direction: row;
+  }
+}

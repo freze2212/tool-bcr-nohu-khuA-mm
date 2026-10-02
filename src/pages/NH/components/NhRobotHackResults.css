@@ -1,0 +1,133 @@
+.nh-robot-hack-results {
+  width: min(420px, 92vw);
+  min-height: 560px;
+  margin: 0 auto 6px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  box-sizing: border-box;
+  filter: drop-shadow(0 0 8px #f5c400);
+  animation: nh-robot-hack-results-in 0.22s ease-out;
+}
+
+@keyframes nh-robot-hack-results-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nh-robot-hack-results__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  padding: 56px 22px 32px;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+/* Tiêu đề panel — lớn nhất */
+.nh-robot-hack-results__title {
+  text-align: center;
+  color: #fff600;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: clamp(20px, 5vw, 26px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  text-shadow: 0 0 10px rgba(247, 255, 0, 0.35);
+}
+
+.nh-robot-hack-results__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.nh-robot-hack-results__box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 84px;
+  padding: 14px 12px;
+  border: 1px solid #f5c400;
+  background: rgba(28, 20, 4, 0.55);
+  box-shadow: none;
+  text-align: center;
+}
+
+/* Nhãn ô — cùng cỡ nhau, nhỏ hơn title */
+.nh-robot-hack-results__label {
+  color: #fff600;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+/* Giá trị + đếm ngược — cùng cỡ nhau */
+.nh-robot-hack-results__value {
+  color: #ffffff;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+}
+
+.nh-robot-hack-results__value--accent {
+  color: #f5c400;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  text-shadow: none;
+}
+
+@media (max-width: 640px) {
+  .nh-robot-hack-results {
+    width: 100%;
+    max-width: 100%;
+    min-height: 400px;
+    margin: 0 auto 4px;
+  }
+
+  .nh-robot-hack-results__inner {
+    padding: 24px 10px 18px;
+    gap: 10px;
+  }
+
+  .nh-robot-hack-results__title {
+    font-size: clamp(19px, 5.5vw, 24px);
+  }
+
+  .nh-robot-hack-results__box {
+    min-height: 68px;
+    padding: 10px 8px;
+    gap: 5px;
+  }
+
+  .nh-robot-hack-results__label {
+    font-size: 14px;
+  }
+
+  .nh-robot-hack-results__value {
+    font-size: 15px;
+    word-break: break-word;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nh-robot-hack-results {
+    animation: none;
+  }
+}
