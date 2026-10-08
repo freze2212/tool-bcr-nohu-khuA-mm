@@ -9,6 +9,11 @@
 }
 
 @media (min-width: 641px) {
+  .nh-slot-header-row {
+    padding: 0 132px;
+    box-sizing: border-box;
+  }
+
   .nh-slot-header-row .nh-hero-banner__back-slot {
     position: absolute;
     left: 0;

@@ -403,8 +403,7 @@ const Slot = () => {
 
     const fetchTableList = async () => {
       try {
-        // For PG/BNG: use FE mockApi directly to guarantee name+icon+order identical to FE.
-        if (roomKey === "PG" || roomKey === "BNG") {
+        if (!isFishingHub && mockApi.tableListData[roomKey]?.length) {
           const mockRes = await mockApi.getTableList(roomKey);
           const list = Array.isArray(mockRes.data) ? mockRes.data : [];
 

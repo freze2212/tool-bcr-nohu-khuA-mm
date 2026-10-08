@@ -12,7 +12,7 @@
 
 .khua-an__fit {
   width: min(1599px, 100%);
-  height: calc(min(1599px, 100%) * 871 / 1599);
+  aspect-ratio: 1599 / 871;
   margin: 8px auto 0;
   position: relative;
   container-type: inline-size;
@@ -268,7 +268,12 @@
 
 .khua-card__box span {
   display: block;
-  width: 214.958px;
+  max-width: 100%;
+  padding: 0 6px;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: #fc0;
   font-family: Roboto, sans-serif;
   font-weight: 700;
@@ -398,6 +403,7 @@
   .khua-an__fit {
     width: 100%;
     height: auto;
+    aspect-ratio: auto;
     container-type: normal;
   }
 
@@ -417,7 +423,9 @@
     top: auto;
     order: -1;
     width: min(420px, 100%);
-    height: calc(min(420px, 100%) * 789 / 574.98);
+    height: auto;
+    aspect-ratio: 574.98 / 789;
+    flex-shrink: 0;
     margin: 0 auto;
     container-type: inline-size;
   }

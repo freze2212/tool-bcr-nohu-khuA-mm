@@ -51,7 +51,7 @@
 
 .bcr-khua__fit {
   width: min(1538px, 100%);
-  height: calc(min(1538px, 100%) * 656 / 1538);
+  aspect-ratio: 1538 / 656;
   margin: 0 auto;
   position: relative;
   container-type: inline-size;
@@ -846,6 +846,7 @@
 
   .bcr-khua__fit {
     height: auto;
+    aspect-ratio: auto;
     container-type: normal;
   }
 

@@ -14,6 +14,7 @@
   justify-content: center;
   min-height: 70px;
   margin: 8px 0 28px;
+  padding: 0 136px;
 }
 
 .ll-game-hero__back {
@@ -177,6 +178,7 @@
     min-height: 0;
     gap: 6px;
     margin: 6px 0 14px;
+    padding: 0;
   }
 
   .ll-game-hero__title {
